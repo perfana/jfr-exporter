@@ -4,7 +4,24 @@ Send JFR events to time series databases.
 
 Makes use of [JFR Event Streaming](https://openjdk.org/jeps/349) as found in hotspot based JDK 14+.
 
-Steps:
+The metrics can be used in a Grafana dashboard. 
+
+Shows CPU, Heap and Threads:
+![dashboard overview 1](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-1.jpg)
+
+Shows Garbage Collection events:
+![dashboard overview 2](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-2.jpg)
+
+Shows Safepoints and Big Allocations:
+![dashboard overview 3](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-3.jpg)
+
+And can show the stacktrace of big allocations:
+![dashboard overview 3](https://github.com/perfana/jfr-exporter/blob/main/images/stacktrace-1.jpg)
+
+## Steps
+
+To use JfrExporter:
+
 1. create a database in influx or use an existing one 
 2. put the agent jar on the classpath, point it to InfluxDB
 3. create a datasource in Grafana that points to the InfluxDB database
