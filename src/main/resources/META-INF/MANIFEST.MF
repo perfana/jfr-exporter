@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Premain-Class: io.perfana.jfr.JfrExporter
+Agent-Class: io.perfana.jfr.JfrExporter
+Main-Class: io.perfana.jfr.JfrExporter

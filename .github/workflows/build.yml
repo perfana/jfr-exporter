@@ -1,0 +1,43 @@
+---
+name: Build
+run-name: Build ${{ github.ref_name }} by @${{ github.actor }}
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get short SHA
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Maven build
+        run: ./mvnw clean package
+
+      - uses: ncipollo/release-action@v1
+        with:
+          prerelease: true
+          draft: true
+          allowUpdates: true
+          tag: "v0.0.1-SNAPSHOT-${{ env.sha_short }}"
+          artifacts: "target/jfr-exporter-0.0.1-SNAPSHOT.jar"
+          body: "Release ${{ steps.tagName.outputs.tag }}"
