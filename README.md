@@ -6,7 +6,7 @@ Makes use of [JFR Event Streaming](https://openjdk.org/jeps/349) as found in hot
 
 The metrics can be used in a Grafana dashboard. 
 
-Shows CPU, Heap and Threads:
+Shows CPU, Heap, Threads and Memory Allocation Rate:
 ![dashboard overview 1](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-1.jpg)
 
 Shows Garbage Collection events:
@@ -15,16 +15,16 @@ Shows Garbage Collection events:
 Shows Safepoints and Big Allocations:
 ![dashboard overview 3](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-3.jpg)
 
-And can show the stacktrace of big allocations:
-![dashboard overview 3](https://github.com/perfana/jfr-exporter/blob/main/images/stacktrace-1.jpg)
+And shows the stacktrace of a big allocations:
+![stacktrace example 1](https://github.com/perfana/jfr-exporter/blob/main/images/stacktrace-1.jpg)
 
 ## Steps
 
 To use JfrExporter:
 
-1. create a database in influx or use an existing one 
-2. put the agent jar on the classpath, point it to InfluxDB
-3. create a datasource in Grafana that points to the InfluxDB database
+1. create a database in InfluxDB (or use an existing one)
+2. download and put the agent jar on the classpath, point it to InfluxDB
+3. create a datasource in Grafana for the InfluxDB database
 4. import the Grafana dashboard from the `dashboards` directory, choose InfluxDB datasource
 5. start the application
 6. optional: start load test
