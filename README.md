@@ -1,8 +1,12 @@
 # JfrExporter
 
-Send JFR events to time series databases.
+Send JFR events to time series databases. 
 
 Makes use of [JFR Event Streaming](https://openjdk.org/jeps/349) as found in hotspot based JDK 14+.
+
+Now in "beta", feedback welcome! The events and stack traces need accuracy checks.
+More events can be added. Only InfluxDB time series database is supported
+at the moment.
 
 The metrics can be used in a Grafana dashboard. 
 
@@ -15,8 +19,7 @@ Shows Garbage Collection events:
 Shows Safepoints and Big Allocations:
 ![dashboard overview 3](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-3.jpg)
 
-And shows the stacktrace of a big allocations:
-![stacktrace example 1](https://github.com/perfana/jfr-exporter/blob/main/images/stacktrace-1.jpg)
+And shows the stacktrace of a big allocations (see screenshot below)
 
 ## Steps
 
@@ -30,6 +33,8 @@ To use JfrExporter:
 6. optional: start load test
 
 ## Download
+
+Direct [download version 0.0.1](https://github.com/perfana/jfr-exporter/releases/download/0.0.1/jfr-exporter-0.0.1.jar)
 
 Download the latest release from the [releases page](https://github.com/perfana/jfr-exporter/releases).
 
@@ -89,6 +94,14 @@ Currently a subset of JFR events are processed.
 * Classloaders
 
 For reference: [list of JFR events](https://bestsolution-at.github.io/jfr-doc/index.html).
+
+## Stacktraces
+
+Stack trace for big allocations are sent to InfuxDB.
+Via the dashboard you can see the details by clicking in the big allocations table.
+
+Example:
+![stacktrace example 1](https://github.com/perfana/jfr-exporter/blob/main/images/stacktrace-1.jpg)
 
 ## Dashboard
 
