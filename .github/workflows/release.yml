@@ -40,5 +40,5 @@ jobs:
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "target/jfr-exporter-${{ steps.tagName.outputs.package }}.jar"
-          body: "Release ${{ steps.tagName.outputs.tag }}"
+          artifacts: "target/jfr-exporter-*.jar"
+          body: "Release ${{ env.GIT_TAG_NAME }}"
