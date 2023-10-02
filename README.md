@@ -34,7 +34,7 @@ To use JfrExporter:
 
 ## Download
 
-Direct [download version 0.0.1](https://github.com/perfana/jfr-exporter/releases/download/0.0.1/jfr-exporter-0.0.1.jar)
+Direct [download version 0.1.0](https://github.com/perfana/jfr-exporter/releases/download/0.1.0/jfr-exporter-0.1.0.jar)
 
 Download the latest release from the [releases page](https://github.com/perfana/jfr-exporter/releases).
 
