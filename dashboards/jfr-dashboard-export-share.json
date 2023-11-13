@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_INFLUXDB-JFR",
-      "label": "InfluxDB-JFR",
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
       "description": "",
       "type": "datasource",
       "pluginId": "influxdb",
@@ -12,10 +12,16 @@
   "__elements": {},
   "__requires": [
     {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.5.1"
+      "version": "10.2.0"
     },
     {
       "type": "datasource",
@@ -75,7 +81,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -84,6 +90,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -97,6 +104,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -157,7 +165,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -201,7 +209,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -210,6 +218,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -223,6 +232,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -284,7 +294,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -328,7 +338,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -337,6 +347,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -350,6 +361,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -412,7 +424,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -456,7 +468,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -465,6 +477,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -478,6 +491,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -538,7 +552,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -582,7 +596,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -591,33 +605,21 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 0,
+            "fillOpacity": 80,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
-            "lineInterpolation": "smooth",
-            "lineStyle": {
-              "fill": "solid"
-            },
             "lineWidth": 2,
-            "pointSize": 3,
             "scaleDistribution": {
               "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -649,22 +651,31 @@
       },
       "id": 3,
       "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
         },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
         "tooltip": {
           "mode": "single",
           "sort": "none"
-        }
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
       },
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -703,12 +714,12 @@
         }
       ],
       "title": "Garbage collections (young)",
-      "type": "timeseries"
+      "type": "barchart"
     },
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -755,12 +766,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -798,7 +809,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -807,33 +818,21 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 0,
+            "fillOpacity": 80,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
-            "lineInterpolation": "smooth",
-            "lineStyle": {
-              "fill": "solid"
-            },
             "lineWidth": 2,
-            "pointSize": 3,
             "scaleDistribution": {
               "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -844,8 +843,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -865,22 +863,31 @@
       },
       "id": 8,
       "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
         },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
         "tooltip": {
           "mode": "single",
           "sort": "none"
-        }
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
       },
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -919,12 +926,12 @@
         }
       ],
       "title": "Garbage collections (old)",
-      "type": "timeseries"
+      "type": "barchart"
     },
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -937,8 +944,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -971,12 +977,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1020,7 +1026,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -1029,33 +1035,21 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 0,
+            "fillOpacity": 80,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
-            "lineInterpolation": "smooth",
-            "lineStyle": {
-              "fill": "solid"
-            },
             "lineWidth": 2,
-            "pointSize": 3,
             "scaleDistribution": {
               "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -1086,22 +1080,31 @@
       },
       "id": 9,
       "options": {
+        "barRadius": 0,
+        "barWidth": 1,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
         },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
         "tooltip": {
           "mode": "single",
           "sort": "none"
-        }
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
       },
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1140,12 +1143,12 @@
         }
       ],
       "title": "Safe points",
-      "type": "timeseries"
+      "type": "barchart"
     },
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -1191,12 +1194,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1234,7 +1237,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -1243,6 +1246,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1256,6 +1260,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -1315,7 +1320,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1359,7 +1364,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1439,12 +1444,12 @@
           }
         ]
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [],
           "measurement": "big-allocations",
@@ -1467,7 +1472,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [],
           "hide": false,
@@ -1535,7 +1540,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -1581,12 +1586,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.2.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1624,7 +1629,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -1633,6 +1638,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1646,6 +1652,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineStyle": {
               "fill": "solid"
@@ -1730,7 +1737,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1780,7 +1787,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "${DS_INFLUXDB-JFR}"
+        "uid": "${DS_INFLUXDB}"
       },
       "description": "",
       "fieldConfig": {
@@ -1789,6 +1796,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1802,6 +1810,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -1864,7 +1873,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "${DS_INFLUXDB-JFR}"
+            "uid": "${DS_INFLUXDB}"
           },
           "groupBy": [
             {
@@ -1906,9 +1915,8 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "10s",
+  "refresh": "",
   "schemaVersion": 38,
-  "style": "dark",
   "tags": [
     "jfr",
     "perfana"
@@ -1924,6 +1932,6 @@
   "timezone": "",
   "title": "Perfana JFR Metrics",
   "uid": "jfr-exporter-v1",
-  "version": 1,
+  "version": 7,
   "weekStart": ""
 }
