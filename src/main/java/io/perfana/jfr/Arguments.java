@@ -32,13 +32,15 @@ public class Arguments {
     private String perfanaApiKey = null;
     private Duration duration = null;
     private String influxRetentionPolicy = "autogen";
-    private long bigObjectThresholdBytes = 1_000_000L;
+    private long bigObjectThresholdBytes = 32_000L;
+    private long bigObjectSampleWeightThresholdBytes = 1_000_000L;
 
     public static String usage() {
         return "Usage: java JfrExporter " +
                 "--debug,-d --processId,-p <processId> " +
                 " --duration <ISO-duration> --application,-a <application>" +
                 " --bigObjectThreshold <bytes>" +
+                " --bigObjectSampleWeightThreshold <bytes>" +
                 " --influxUrl <influxUrl> --influxDatabase <influxDatabase>" +
                 " --influxUser <influxUser> --influxPassword <influxPassword>" +
                 " --perfanaUrl <perfanaUrl> --perfanaApiKey <perfanaApiKey>";
@@ -118,6 +120,11 @@ public class Arguments {
                 continue;
             }
 
+            if (matches(arg, "", "--bigObjectSampleWeightThreshold", "bigObjectSampleWeightThreshold")) {
+                arguments.bigObjectSampleWeightThresholdBytes = Long.parseLong(options.remove());
+                continue;
+            }
+
             print("WARN: unknown option: " + arg);
 
         }
@@ -139,6 +146,9 @@ public class Arguments {
 
     public long getBigObjectThresholdBytes() {
         return bigObjectThresholdBytes;
+    }
+    public long getBigObjectSampleWeigthThresholdBytes() {
+        return bigObjectSampleWeightThresholdBytes;
     }
 
     public String getInfluxUrl() {

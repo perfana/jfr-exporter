@@ -15,12 +15,63 @@
  */
 package io.perfana.jfr;
 
+import jdk.jfr.consumer.RecordedEvent;
+import org.jetbrains.annotations.NotNull;
+
 import javax.management.*;
 import java.lang.management.ManagementFactory;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class JfrUtil {
 
     private JfrUtil() {
+    }
+
+    public static String translatePrimitiveClass(String objectClass) {
+        if (objectClass.startsWith("[")) {
+            int lastIndexOf = objectClass.lastIndexOf('[');
+            String remainder = objectClass.substring(lastIndexOf + 1);
+
+            String arrayPrefix = arrayPrefix(lastIndexOf + 1);
+
+            String baseType = switch (remainder.charAt(0)) {
+                case 'Z' -> "boolean";
+                case 'B' -> "byte";
+                case 'C' -> "char";
+                case 'D' -> "double";
+                case 'F' -> "float";
+                case 'I' -> "int";
+                case 'J' -> "long";
+                case 'S' -> "short";
+                case 'L' -> extractObject(remainder);
+                default -> throw new JfrExporterException("Unknown array type: " + objectClass);
+            };
+            return baseType + arrayPrefix;
+        }
+        else {
+            return objectClass;
+        }
+    }
+
+    private static String arrayPrefix(int count) {
+        if (count == 1) return "[]";
+        if (count == 2) return "[][]";
+        if (count == 3) return "[][][]";
+        else return IntStream.range(0, count).mapToObj(i -> "[]").collect(Collectors.joining());
+    }
+
+    static String extractObject(String remainder) {
+        int end = remainder.indexOf(';');
+        return remainder.substring(1, end);
+    }
+
+    @NotNull
+    public static List<String> translateStacktrace(RecordedEvent event) {
+        return  event.getStackTrace().getFrames().stream()
+                .map(f -> f.getMethod().getType().getName() + "." + f.getMethod().getName() + " (line: " + f.getLineNumber() + ")")
+                .toList();
     }
 
     void startFlightRecorderViaMBean() {

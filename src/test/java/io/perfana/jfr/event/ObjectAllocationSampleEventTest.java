@@ -16,6 +16,7 @@
 package io.perfana.jfr.event;
 
 import io.perfana.jfr.JfrEventProcessor;
+import io.perfana.jfr.JfrUtil;
 import io.perfana.jfr.NoopEventProcessor;
 import jdk.jfr.EventType;
 import jdk.jfr.consumer.RecordedClass;
@@ -55,9 +56,9 @@ class ObjectAllocationSampleEventTest {
 
     @Test
     void testTranslate() {
-        assertEquals(byte.class.getCanonicalName(), ObjectAllocationSampleEvent.translatePrimitiveClass("byte"));
-        assertEquals("byte[]", ObjectAllocationSampleEvent.translatePrimitiveClass("[B"));
-        assertEquals("java.lang.Byte[]", ObjectAllocationSampleEvent.translatePrimitiveClass("[Ljava.lang.Byte;"));
-        assertEquals(byte[][][][][].class.getCanonicalName(), ObjectAllocationSampleEvent.translatePrimitiveClass("[[[[[B"));
+        assertEquals(byte.class.getCanonicalName(), JfrUtil.translatePrimitiveClass("byte"));
+        assertEquals("byte[]", JfrUtil.translatePrimitiveClass("[B"));
+        assertEquals("java.lang.Byte[]", JfrUtil.translatePrimitiveClass("[Ljava.lang.Byte;"));
+        assertEquals(byte[][][][][].class.getCanonicalName(), JfrUtil.translatePrimitiveClass("[[[[[B"));
     }
 }

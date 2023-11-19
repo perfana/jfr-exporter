@@ -22,8 +22,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class ObjectAllocationSampleEvent implements OnJfrEvent, JfrEventProvider {
 
@@ -48,12 +46,15 @@ public class ObjectAllocationSampleEvent implements OnJfrEvent, JfrEventProvider
     @Override
     public void onEvent(RecordedEvent event) {
         String name = event.getEventType().getName();
+        // The relative weight of the sample. Aggregating the weights for a large number of samples,
+        // for a particular class, thread or stack trace,
+        // gives a statistically accurate representation of the allocation pressure
         long weight = event.getLong("weight");
         String objectClass = event.getClass("objectClass").getName();
         Instant startTime = event.getStartTime();
         log.trace("%s %s %d", (startTime == null ? "<no-start-time>" : startTime), name, weight);
 
-        reportBigAllocation(event, weight, objectClass, startTime);
+        reportLargeAllocationSample(event, weight, objectClass, startTime);
 
         reportTotalAllocations(weight, startTime);
     }
@@ -85,26 +86,24 @@ public class ObjectAllocationSampleEvent implements OnJfrEvent, JfrEventProvider
         }
     }
 
-    private void reportBigAllocation(RecordedEvent event, long weight, String objectClass, Instant startTime) {
+    private void reportLargeAllocationSample(RecordedEvent event, long weight, String objectClass, Instant startTime) {
         if (weight > bigAllocationSizeBytes) {
 
             if (event.getStackTrace() == null) {
-                log.error("No stack trace available for large allocation weight of %d bytes of %s", weight, objectClass);
+                log.error("No stack trace available for large allocation sample weight of %d bytes of objectClass '%s'", weight, objectClass);
                 return;
             }
 
-            List<String> stackTrace = event.getStackTrace().getFrames().stream()
-                    .map(f -> f.getMethod().getType().getName() + "." + f.getMethod().getName() + " (line: " + f.getLineNumber() + ")")
-                    .toList();
+            List<String> stackTrace = JfrUtil.translateStacktrace(event);
 
-            String objectClassTranslation = translatePrimitiveClass(objectClass);
+            String objectClassTranslation = JfrUtil.translatePrimitiveClass(objectClass);
             String firstStack = stackTrace.isEmpty() ? "<none>" : stackTrace.get(0);
             log.debug("Found high allocation weight of %d bytes of %s in '%s'", weight, objectClassTranslation, firstStack);
 
             Map<String, Object> extraFields = Map.of("objectClass", objectClassTranslation, "thread", event.getThread().getJavaName());
 
             ProcessedJfrEvent processedEvent = new ProcessedJfrEvent(startTime,
-                    "big-allocations",
+                    "object-allocation-sample",
                     "bytes",
                     weight,
                     stackTrace,
@@ -112,44 +111,6 @@ public class ObjectAllocationSampleEvent implements OnJfrEvent, JfrEventProvider
 
             eventProcessor.processEvent(processedEvent);
         }
-    }
-
-    static String translatePrimitiveClass(String objectClass) {
-        if (objectClass.startsWith("[")) {
-            int lastIndexOf = objectClass.lastIndexOf('[');
-            String remainder = objectClass.substring(lastIndexOf + 1);
-
-            String arrayPrefix = arrayPrefix(lastIndexOf + 1);
-
-            String baseType = switch (remainder.charAt(0)) {
-                case 'Z' -> "boolean";
-                case 'B' -> "byte";
-                case 'C' -> "char";
-                case 'D' -> "double";
-                case 'F' -> "float";
-                case 'I' -> "int";
-                case 'J' -> "long";
-                case 'S' -> "short";
-                case 'L' -> extractObject(remainder);
-                default -> throw new JfrExporterException("Unknown array type: " + objectClass);
-            };
-            return baseType + arrayPrefix;
-        }
-        else {
-            return objectClass;
-        }
-    }
-
-    private static String arrayPrefix(int count) {
-        if (count == 1) return "[]";
-        if (count == 2) return "[][]";
-        if (count == 3) return "[][][]";
-        else return IntStream.range(0, count).mapToObj(i -> "[]").collect(Collectors.joining());
-    }
-
-    static String extractObject(String remainder) {
-        int end = remainder.indexOf(';');
-        return remainder.substring(1, end);
     }
 
     @Override
