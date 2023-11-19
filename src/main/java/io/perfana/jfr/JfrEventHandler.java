@@ -52,21 +52,21 @@ public class JfrEventHandler {
 
             EventSettings settings = stream.enable(jfrEventSettings.getName());
 
-            StringBuffer sb = new StringBuffer();
+            StringBuilder debugInfo = new StringBuilder();
             if (jfrEventSettings.hasPeriod()) {
                 settings.withPeriod(jfrEventSettings.getPeriod());
-                sb.append(" with period " + jfrEventSettings.getPeriod());
+                debugInfo.append(" with period ").append(jfrEventSettings.getPeriod());
             }
             if (jfrEventSettings.hasThreshold()) {
                 settings.withThreshold(jfrEventSettings.getThreshold());
-                sb.append(" with threshold " + jfrEventSettings.getThreshold());
+                debugInfo.append(" with threshold ").append(jfrEventSettings.getThreshold());
             }
             if (jfrEventSettings.hasOtherThreshold()) {
                 ThresholdPair otherThreshold = jfrEventSettings.getOtherThreshold();
                 settings.with(otherThreshold.name(), otherThreshold.value());
-                sb.append(" with " + otherThreshold.name() + " " + otherThreshold.value());
+                debugInfo.append(" with ").append(otherThreshold.name()).append(" ").append(otherThreshold.value());
             }
-            log.debug("Enable event %s%s", jfrEventSettings.getName(), sb.toString());
+            log.debug("Enable event %s%s", jfrEventSettings.getName(), debugInfo.toString());
         }
     }
 }

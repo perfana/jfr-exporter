@@ -20,22 +20,20 @@ import io.perfana.jfr.NoopEventProcessor;
 import jdk.jfr.EventType;
 import jdk.jfr.consumer.RecordedClass;
 import jdk.jfr.consumer.RecordedEvent;
-import jdk.jfr.consumer.RecordedFrame;
-import jdk.jfr.consumer.RecordedStackTrace;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ObjectAllocationEventTest {
+class ObjectAllocationSampleEventTest {
 
     @Test
     void onEvent() {
         JfrEventProcessor eventProcessor = new NoopEventProcessor();
-        ObjectAllocationEvent objectAllocationEvent = new ObjectAllocationEvent(eventProcessor, 1_000_000);
+        ObjectAllocationSampleEvent objectAllocationSampleEvent = new ObjectAllocationSampleEvent(eventProcessor, 1_000_000);
 
         RecordedEvent eventMock = Mockito.mock(RecordedEvent.class);
 
@@ -52,14 +50,14 @@ class ObjectAllocationEventTest {
         // no allocation trace created when smaller than threshold
         Mockito.when(eventMock.getLong("weight")).thenReturn(900_000L);
 
-        assertDoesNotThrow(() -> objectAllocationEvent.onEvent(eventMock));
+        assertDoesNotThrow(() -> objectAllocationSampleEvent.onEvent(eventMock));
     }
 
     @Test
     void testTranslate() {
-        assertEquals(byte.class.getCanonicalName(), ObjectAllocationEvent.translatePrimitiveClass("byte"));
-        assertEquals("byte[]", ObjectAllocationEvent.translatePrimitiveClass("[B"));
-        assertEquals("java.lang.Byte[]", ObjectAllocationEvent.translatePrimitiveClass("[Ljava.lang.Byte;"));
-        assertEquals(byte[][][][][].class.getCanonicalName(), ObjectAllocationEvent.translatePrimitiveClass("[[[[[B"));
+        assertEquals(byte.class.getCanonicalName(), ObjectAllocationSampleEvent.translatePrimitiveClass("byte"));
+        assertEquals("byte[]", ObjectAllocationSampleEvent.translatePrimitiveClass("[B"));
+        assertEquals("java.lang.Byte[]", ObjectAllocationSampleEvent.translatePrimitiveClass("[Ljava.lang.Byte;"));
+        assertEquals(byte[][][][][].class.getCanonicalName(), ObjectAllocationSampleEvent.translatePrimitiveClass("[[[[[B"));
     }
 }

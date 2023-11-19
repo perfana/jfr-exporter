@@ -65,8 +65,8 @@ public class JfrExporter {
                 SafepointEvent safepointEvent = new SafepointEvent(eventProcessor);
                 safepointEvent.getEventSettings().forEach(eventHandler::register);
 
-                ObjectAllocationEvent objectAllocationEvent = new ObjectAllocationEvent(eventProcessor, args.getBigObjectThresholdBytes());
-                objectAllocationEvent.getEventSettings().forEach(eventHandler::register);
+                ObjectAllocationSampleEvent objectAllocationSampleEvent = new ObjectAllocationSampleEvent(eventProcessor, args.getBigObjectThresholdBytes());
+                objectAllocationSampleEvent.getEventSettings().forEach(eventHandler::register);
 
                 GCHeapEvent gcHeapEvent = new GCHeapEvent(eventProcessor);
                 gcHeapEvent.getEventSettings().forEach(eventHandler::register);

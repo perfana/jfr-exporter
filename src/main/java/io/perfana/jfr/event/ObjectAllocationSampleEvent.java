@@ -25,9 +25,9 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ObjectAllocationEvent implements OnJfrEvent, JfrEventProvider {
+public class ObjectAllocationSampleEvent implements OnJfrEvent, JfrEventProvider {
 
-    private static final Logger log = Logger.getLogger(ObjectAllocationEvent.class);
+    private static final Logger log = Logger.getLogger(ObjectAllocationSampleEvent.class);
 
     public static final String JDK_OBJECT_ALLOCATION_SAMPLE = "jdk.ObjectAllocationSample";
     private final JfrEventProcessor eventProcessor;
@@ -38,7 +38,7 @@ public class ObjectAllocationEvent implements OnJfrEvent, JfrEventProvider {
 
     private static final long reportIntervalMs = 2000;
 
-    public ObjectAllocationEvent(JfrEventProcessor eventProcessor, long thresholdSizeBytes) {
+    public ObjectAllocationSampleEvent(JfrEventProcessor eventProcessor, long thresholdSizeBytes) {
         if (eventProcessor == null) throw new IllegalArgumentException("eventProcessor must not be null");
         log.debug("Tracing object allocations of more than %d bytes.", thresholdSizeBytes);
         this.eventProcessor = eventProcessor;
@@ -88,13 +88,18 @@ public class ObjectAllocationEvent implements OnJfrEvent, JfrEventProvider {
     private void reportBigAllocation(RecordedEvent event, long weight, String objectClass, Instant startTime) {
         if (weight > bigAllocationSizeBytes) {
 
+            if (event.getStackTrace() == null) {
+                log.error("No stack trace available for large allocation weight of %d bytes of %s", weight, objectClass);
+                return;
+            }
+
             List<String> stackTrace = event.getStackTrace().getFrames().stream()
                     .map(f -> f.getMethod().getType().getName() + "." + f.getMethod().getName() + " (line: " + f.getLineNumber() + ")")
                     .toList();
 
             String objectClassTranslation = translatePrimitiveClass(objectClass);
             String firstStack = stackTrace.isEmpty() ? "<none>" : stackTrace.get(0);
-            log.debug("Found big allocation of %d bytes of %s in '%s'", weight, objectClassTranslation, firstStack);
+            log.debug("Found high allocation weight of %d bytes of %s in '%s'", weight, objectClassTranslation, firstStack);
 
             Map<String, Object> extraFields = Map.of("objectClass", objectClassTranslation, "thread", event.getThread().getJavaName());
 
