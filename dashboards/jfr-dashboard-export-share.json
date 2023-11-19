@@ -1981,7 +1981,23 @@
     "perfana"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {},
+        "definition": "SHOW TAG VALUES WITH KEY = \"application\"",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "application",
+        "options": [],
+        "query": "SHOW TAG VALUES WITH KEY = \"application\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
   },
   "time": {
     "from": "now-15m",
@@ -1991,6 +2007,6 @@
   "timezone": "",
   "title": "Perfana JFR Metrics",
   "uid": "jfr-exporter-v1",
-  "version": 8,
+  "version": 1,
   "weekStart": ""
 }

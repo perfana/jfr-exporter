@@ -34,7 +34,7 @@ To use JfrExporter:
 
 ## Download
 
-Direct [download version 0.1.0](https://github.com/perfana/jfr-exporter/releases/download/0.1.0/jfr-exporter-0.1.0.jar)
+Direct [download version 0.2.0](https://github.com/perfana/jfr-exporter/releases/download/0.2.0/jfr-exporter-0.1.0.jar)
 
 Download the latest release from the [releases page](https://github.com/perfana/jfr-exporter/releases).
 
@@ -66,6 +66,7 @@ Usage: java JfrExporter
  --duration <ISO-duration> 
  --application,-a <application>
  --bigObjectThreshold <bytes>
+ --bigObjectSampleWeightThreshold <bytes>
  --influxUrl <influxUrl> 
  --influxDatabase <influxDatabase>
  --influxUser <influxUser> 
