@@ -22,7 +22,6 @@ import io.perfana.jfr.ProcessedJfrEvent;
 import jdk.jfr.consumer.RecordedEvent;
 
 import java.time.Duration;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +70,7 @@ public class GCHeapEvent implements OnJfrEvent, JfrEventProvider {
         return ProcessedJfrEvent.of(
                 event.getStartTime(),
                 "oldGc",
-                "duration",
+                "duration-ms",
                 durationMs);
     }
 
@@ -81,7 +80,7 @@ public class GCHeapEvent implements OnJfrEvent, JfrEventProvider {
         return ProcessedJfrEvent.of(
                 event.getStartTime(),
                 "youngGc",
-                "duration",
+                "duration-ms",
                 durationMs);
     }
 
@@ -89,12 +88,11 @@ public class GCHeapEvent implements OnJfrEvent, JfrEventProvider {
         long heapUsed = event.getLong("heapUsed");
         long heapCommitted = event.getLong("heapSpace.committedSize");
 
-        return new ProcessedJfrEvent(
+        return ProcessedJfrEvent.of(
                 event.getStartTime(),
                 "heap",
                 "heapUsed",
                 heapUsed,
-                Collections.emptyList(),
                 Map.of("heapCommitted", heapCommitted));
     }
 

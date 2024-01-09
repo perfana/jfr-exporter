@@ -32,8 +32,8 @@ public class Arguments {
     private String perfanaApiKey = null;
     private Duration duration = null;
     private String influxRetentionPolicy = "autogen";
-    private long bigObjectThresholdBytes = 32_000L;
-    private long bigObjectSampleWeightThresholdBytes = 1_000_000L;
+    private long bigObjectThresholdBytes = 256_000L;
+    private long bigObjectSampleWeightThresholdBytes = 48_000_000L;
 
     public static String usage() {
         return "Usage: java JfrExporter " +

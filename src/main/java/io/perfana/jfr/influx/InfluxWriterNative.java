@@ -28,10 +28,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -76,8 +73,14 @@ public class InfluxWriterNative implements InfluxWriter {
         Instant timestamp = event.timestamp() == null ? Instant.now() : event.timestamp();
         long timestampEpochNano = InfluxWriter.toEpochNs(timestamp);
 
-        Map<String, String> tags = new HashMap<>();
+        // tags are sorted alphabetically for better performance in InfluxDB
+        SortedMap<String, String> tags = new TreeMap<>();
         tags.put("application", config.application());
+
+        for (Map.Entry<String, String> entry : event.tags().entrySet()) {
+            String escapedValue = escapeTagForInflux(entry.getValue());
+            tags.put(entry.getKey(), escapedValue);
+        }
 
         String generatedTags = tags.entrySet().stream()
                 .map(e -> e.getKey() + "=" + e.getValue())
@@ -161,15 +164,16 @@ public class InfluxWriterNative implements InfluxWriter {
 
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            log.trace("InfluxDB response: %d %s", response.statusCode(), response.body());
-            if (response.statusCode() != 204) {
-                log.error("Failed to send request to InfluxDB: %s", response.body());
+            int statusCode = response.statusCode();
+            log.trace("InfluxDB response: %d %s", statusCode, response.body());
+            if (statusCode != 204) {
+                log.error("Failed to send request to InfluxDB: (%d) %s", statusCode, response.body());
             }
         } catch (IOException e) {
-            log.error("Failed to send request to InfluxDB: %s", e.getMessage());
+            log.error("Failed to send request to InfluxDB: (%s) %s", e.getClass().getSimpleName(), e.getMessage());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            log.error("Failed to send request to InfluxDB: %s", e.getMessage());
+            log.error("Failed to send request to InfluxDB: (%s) %s", e.getClass().getSimpleName(), e.getMessage());
         }
 
     }
@@ -190,6 +194,16 @@ public class InfluxWriterNative implements InfluxWriter {
             return "\"" + escapeSlashesAndDoubleQuotes(value.toString()) + "\"";
         }
         return "\"" + value + "\"";
+    }
+    @NotNull
+    private static String escapeTagForInflux(String value) {
+        if (value == null) {
+            return "<null>";
+        }
+        if (value.isBlank()) {
+            return "<blank>";
+        }
+        return value.replace(" ", "\\ ").replace(",", "\\,");
     }
 
     private static String escapeSlashesAndDoubleQuotes(String text) {

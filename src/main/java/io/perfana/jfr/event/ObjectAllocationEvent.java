@@ -63,14 +63,18 @@ public class ObjectAllocationEvent implements OnJfrEvent, JfrEventProvider {
             String firstStack = stackTrace.isEmpty() ? "<none>" : stackTrace.get(0);
             log.debug("Found big object allocation of %d bytes of %s in '%s'", allocationSize, objectClassTranslation, firstStack);
 
-            Map<String, Object> extraFields = Map.of("objectClass", objectClassTranslation, "thread", event.getThread().getJavaName());
+            Map<String, Object> extraFields = Map.of(
+                    "objectClass", objectClassTranslation,
+                    "thread", event.getThread().getJavaName()
+            );
 
-            ProcessedJfrEvent processedEvent = new ProcessedJfrEvent(startTime,
+            ProcessedJfrEvent processedEvent = ProcessedJfrEvent.of(
+                    startTime,
                     "big-allocations",
                     "bytes",
                     allocationSize,
-                    stackTrace,
-                    extraFields);
+                    extraFields,
+                    stackTrace);
 
             eventProcessor.processEvent(processedEvent);
         }
