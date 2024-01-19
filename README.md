@@ -11,19 +11,19 @@ at the moment.
 The metrics can be used in a Grafana dashboard. 
 
 Shows CPU, Heap, Threads and Memory Allocation Rate:
-![dashboard overview 1](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-6.jpg)
+![dashboard overview 1](images/dashboard-6.jpg)
 
 Shows Garbage Collection events:
-![dashboard overview 2](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-8.jpg)
+![dashboard overview 2](images/dashboard-8.jpg)
 
 Shows Safepoints and Big Allocations:
-![dashboard overview 3](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-7.jpg)
+![dashboard overview 3](images/dashboard-7.jpg)
 
 Shows Java Monitor waits and enters:
-![dashboard overview 4](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-4.jpg)
+![dashboard overview 4](images/dashboard-4.jpg)
 
 Shows Network read/write:
-![dashboard overview 5](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-5.jpg)
+![dashboard overview 5](images/dashboard-5.jpg)
 
 And shows the stacktrace of a big allocations (see screenshot below)
 
@@ -110,7 +110,7 @@ Stack traces for several events are sent to InfuxDB.
 Via the dashboard you can see the details by clicking in the stacktrace columns.
 
 Example of a big memory allocation stacktrace:
-![stacktrace example 1](https://github.com/perfana/jfr-exporter/blob/main/images/stacktrace-2.jpg)
+![stacktrace example 1](images/stacktrace-2.jpg)
 
 ## Dashboard
 
