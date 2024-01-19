@@ -11,13 +11,19 @@ at the moment.
 The metrics can be used in a Grafana dashboard. 
 
 Shows CPU, Heap, Threads and Memory Allocation Rate:
-![dashboard overview 1](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-1.jpg)
+![dashboard overview 1](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-6.jpg)
 
 Shows Garbage Collection events:
-![dashboard overview 2](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-2.jpg)
+![dashboard overview 2](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-8.jpg)
 
 Shows Safepoints and Big Allocations:
-![dashboard overview 3](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-3.jpg)
+![dashboard overview 3](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-7.jpg)
+
+Shows Java Monitor waits and enters:
+![dashboard overview 4](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-4.jpg)
+
+Shows Network read/write:
+![dashboard overview 5](https://github.com/perfana/jfr-exporter/blob/main/images/dashboard-5.jpg)
 
 And shows the stacktrace of a big allocations (see screenshot below)
 
@@ -93,16 +99,18 @@ Currently a subset of JFR events are processed.
 * Safepoints
 * Threads
 * Classloaders
+* Network read/write
+* Java Monitor waits and enters
 
 For reference: [list of JFR events](https://bestsolution-at.github.io/jfr-doc/index.html).
 
 ## Stacktraces
 
-Stack trace for big allocations are sent to InfuxDB.
-Via the dashboard you can see the details by clicking in the big allocations table.
+Stack traces for several events are sent to InfuxDB.
+Via the dashboard you can see the details by clicking in the stacktrace columns.
 
-Example:
-![stacktrace example 1](https://github.com/perfana/jfr-exporter/blob/main/images/stacktrace-1.jpg)
+Example of a big memory allocation stacktrace:
+![stacktrace example 1](https://github.com/perfana/jfr-exporter/blob/main/images/stacktrace-2.jpg)
 
 ## Dashboard
 

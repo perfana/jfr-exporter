@@ -1736,6 +1736,19 @@
           "options": {
             "byField": "Time"
           }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "big-allocations.bytes": "size",
+              "big-allocations.objectClass": "object class",
+              "big-allocations.stacktrace": "stacktrace",
+              "big-allocations.thread": "thread"
+            }
+          }
         }
       ],
       "type": "table"
@@ -2039,6 +2052,19 @@
           "id": "seriesToColumns",
           "options": {
             "byField": "Time"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "object-allocation-sample.bytes": "size",
+              "object-allocation-sample.objectClass": "object class",
+              "object-allocation-sample.stacktrace": "stacktrace",
+              "object-allocation-sample.thread": "thread"
+            }
           }
         }
       ],
@@ -2351,6 +2377,21 @@
           "options": {
             "byField": "Time"
           }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "java-monitor-enter.address": "address",
+              "java-monitor-enter.duration-ns": "duration",
+              "java-monitor-enter.monitor-class": "monitor class",
+              "java-monitor-enter.previous-owner": "previous owner",
+              "java-monitor-enter.stacktrace": "stacktrace",
+              "java-monitor-enter.thread": "thread"
+            }
+          }
         }
       ],
       "type": "table"
@@ -2550,8 +2591,8 @@
         "showHeader": true,
         "sortBy": [
           {
-            "desc": false,
-            "displayName": "java-monitor-enter.thread"
+            "desc": true,
+            "displayName": "duration"
           }
         ]
       },
@@ -2663,14 +2704,14 @@
             "include": {
               "names": [
                 "Time",
-                "java-monitor-wait.duration-ns",
                 "java-monitor-wait.stacktrace",
+                "java-monitor-wait.thread",
                 "java-monitor-wait.address",
                 "java-monitor-wait.monitor-class",
                 "java-monitor-wait.notifier",
                 "java-monitor-wait.timeout",
                 "java-monitor-wait.timed-out",
-                "java-monitor-wait.thread"
+                "java-monitor-wait.duration-ns"
               ]
             }
           }
@@ -2680,6 +2721,23 @@
           "options": {
             "byField": "Time",
             "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "java-monitor-wait.address": "address",
+              "java-monitor-wait.duration-ns": "duration",
+              "java-monitor-wait.monitor-class": "monitor-class",
+              "java-monitor-wait.notifier": "notifier",
+              "java-monitor-wait.stacktrace": "stacktrace",
+              "java-monitor-wait.thread": "thread",
+              "java-monitor-wait.timed-out": "timed-out",
+              "java-monitor-wait.timeout": "timeout-ms"
+            }
           }
         }
       ],
@@ -2724,7 +2782,7 @@
             "spanNulls": 30000,
             "stacking": {
               "group": "A",
-              "mode": "normal"
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -2746,7 +2804,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "Bps"
         },
         "overrides": []
       },
@@ -2876,7 +2934,7 @@
             "spanNulls": 30000,
             "stacking": {
               "group": "A",
-              "mode": "normal"
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -2898,7 +2956,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "Bps"
         },
         "overrides": []
       },
@@ -3120,7 +3178,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "5s",
+  "refresh": false,
   "schemaVersion": 38,
   "style": "dark",
   "tags": [
@@ -3151,13 +3209,13 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Perfana JFR Metrics 2",
   "uid": "jfr-exporter-v2",
-  "version": 5,
+  "version": 14,
   "weekStart": ""
 }
