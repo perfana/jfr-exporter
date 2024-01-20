@@ -3214,8 +3214,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Perfana JFR Metrics 2",
-  "uid": "jfr-exporter-v2",
+  "title": "Perfana JFR Metrics 0.3",
+  "uid": "jfr-exporter-0-3",
   "version": 14,
   "weekStart": ""
 }

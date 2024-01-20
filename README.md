@@ -1,31 +1,36 @@
 # JfrExporter
 
-Send JFR events to time series databases. 
+Send JFR events to time series databases.
+
+Now in "beta", feedback welcome!
+
+See tutorial in this [blog post](https://perfana.io/continuous-deep-dive-with-jfr-events/).
+
+[![JfrExporter tutarial video](https://img.youtube.com/vi/rAq2Xo-VoVc/0.jpg)](https://www.youtube.com/watch?v=rAq2Xo-VoVc)
 
 Makes use of [JFR Event Streaming](https://openjdk.org/jeps/349) as found in hotspot based JDK 14+.
 
-Now in "beta", feedback welcome! The events and stack traces need accuracy checks.
-More events can be added. Only InfluxDB time series database is supported
-at the moment.
+The InfluxDB time series database is used as storage for the metrics.
 
-The metrics can be used in a Grafana dashboard. 
+The metrics are displayed in a Grafana dashboard, as shown in the following screenshots.
 
-Shows CPU, Heap, Threads and Memory Allocation Rate:
+CPU, Heap, Threads and Memory Allocation Rate:
 ![dashboard overview 1](images/dashboard-6.jpg)
 
-Shows Garbage Collection events:
+Garbage Collection events:
 ![dashboard overview 2](images/dashboard-8.jpg)
 
-Shows Safepoints and Big Allocations:
+Large allocation samples and Big Allocations:
 ![dashboard overview 3](images/dashboard-7.jpg)
 
-Shows Java Monitor waits and enters:
+Java Monitor waits and enters:
 ![dashboard overview 4](images/dashboard-4.jpg)
 
-Shows Network read/write:
+Network reads and writes:
 ![dashboard overview 5](images/dashboard-5.jpg)
 
-And shows the stacktrace of a big allocations (see screenshot below)
+For some events stacktraces are present, such as where in the code a big memory allocation took place.
+(see screenshot below)
 
 ## Steps
 
@@ -40,7 +45,7 @@ To use JfrExporter:
 
 ## Download
 
-Direct [download version 0.2.0](https://github.com/perfana/jfr-exporter/releases/download/0.2.0/jfr-exporter-0.1.0.jar)
+Direct [download version 0.3.0](https://github.com/perfana/jfr-exporter/releases/download/0.3.0/jfr-exporter-0.3.0.jar)
 
 Download the latest release from the [releases page](https://github.com/perfana/jfr-exporter/releases).
 
@@ -92,13 +97,13 @@ use a saved JFR profile in the JDK used, for example saved as `mySettings`: `-XX
 
 ## Events
 
-Currently a subset of JFR events are processed. 
+These JFR events are processed: 
 * CPU load
-* Garbage Collection
-* Memory (heap usage, large allocations)
+* Thread count
+* Classes loaded
+* Garbage Collection (GC) events
 * Safepoints
-* Threads
-* Classloaders
+* Memory (heap usage, large allocations)
 * Network read/write
 * Java Monitor waits and enters
 
@@ -115,8 +120,11 @@ Example of a big memory allocation stacktrace:
 ## Dashboard
 
 A Grafana dashboard can be imported to view the JFR metrics.
+
 Import the dashboard in the `dashboards` directory into Grafana and
 connect to an InfluxDB datasource that points to the `jfr` database.
+
+For version 0.3.0 and above use dashboard `jfr-dashboard-export-share-0.3.json`.
 
 ## Troubleshoot
 
