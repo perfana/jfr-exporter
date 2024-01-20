@@ -31,5 +31,5 @@ jobs:
           java-version: '17'
 
       - name: Maven build
-        run: ./mvnw clean package
+        run: ./mvnw -Drevision=LOCAL-SNAPSHOT clean package
 

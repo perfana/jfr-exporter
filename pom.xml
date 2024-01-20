@@ -22,7 +22,7 @@
 
     <groupId>io.perfana</groupId>
     <artifactId>jfr-exporter</artifactId>
-    <version>0.2.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>jfr-exporter</name>
 
     <description>Export stream of JDK Flight Recorder JVM events to Influx</description>
