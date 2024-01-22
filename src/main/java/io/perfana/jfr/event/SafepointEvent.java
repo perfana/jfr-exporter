@@ -55,13 +55,15 @@ public class SafepointEvent implements OnJfrEvent, JfrEventProvider {
                 Duration duration = Duration.between(startTime, event.getEndTime());
                 log.debug("Safepoint duration: %s", duration);
 
-                ProcessedJfrEvent processedEvent = ProcessedJfrEvent.of(
-                        event.getStartTime(),
-                        "safepoint",
-                        "duration",
-                        (double) duration.toMillis());
+                if (duration.toMillis() > 1) {
+                    ProcessedJfrEvent processedEvent = ProcessedJfrEvent.of(
+                            event.getStartTime(),
+                            "safepoint",
+                            "duration-ms",
+                            (double) duration.toMillis());
 
-                eventProcessor.processEvent(processedEvent);
+                    eventProcessor.processEvent(processedEvent);
+                }
             } else {
                 log.debug("Safepoint begin with id %d not found", safepointId);
             }

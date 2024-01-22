@@ -24,13 +24,10 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Set up JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-
-      - name: Maven build
-        run: ./mvnw clean package
 
       - name: get tag
         uses: olegtarasov/get-tag@v2.1.2
@@ -38,7 +35,10 @@ jobs:
         with:
           tagRegex: "(.*)"
 
+      - name: Maven build
+        run: ./mvnw -Drevision=${{ env.GIT_TAG_NAME }} -clean package
+
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "target/jfr-exporter-*.jar"
+          artifacts: "target/jfr-exporter-${{ env.GIT_TAG_NAME }}.jar"
           body: "Release ${{ env.GIT_TAG_NAME }}"

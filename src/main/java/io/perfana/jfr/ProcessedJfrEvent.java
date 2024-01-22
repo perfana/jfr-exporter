@@ -27,13 +27,17 @@ import java.util.Map;
 /**
  * A processed JFR event.
  * The timestamp can be null if not present.
+ * Preferably Use one of the static factory methods "of()" to create an instance.
  */
 public record ProcessedJfrEvent(@Nullable Instant timestamp,
                                 @Nonnull String measurementName,
+                                @Nonnull Map<String, String> tags,
                                 @Nonnull String field,
                                 @Nonnull Number value,
-                                @Nonnull List<String> stacktrace,
-                                @Nonnull Map<String, Object> extraFields) {
+                                @Nonnull Map<String, Object> extraFields,
+                                @Nonnull List<String> stacktrace
+) {
+
     public ProcessedJfrEvent {
         if (measurementName.isBlank()) {
             throw new IllegalArgumentException("measurementName cannot be blank.");
@@ -47,7 +51,7 @@ public record ProcessedJfrEvent(@Nullable Instant timestamp,
                                        @Nonnull String measurementName,
                                        @Nonnull String field,
                                        @Nonnull Number value) {
-        return new ProcessedJfrEvent(timestamp, measurementName, field, value, List.of(), Map.of());
+        return new ProcessedJfrEvent(timestamp, measurementName, Map.of(), field, value, Map.of(), List.of());
     }
 
     public static ProcessedJfrEvent of(RecordedEvent event, String measurementName, String metric, MetricCalculation calculation) {
@@ -62,10 +66,49 @@ public record ProcessedJfrEvent(@Nullable Instant timestamp,
 
    }
 
+    public static ProcessedJfrEvent of(
+            @Nullable Instant timestamp,
+            @Nonnull String measurementName,
+            @Nonnull String field,
+            long value,
+            @Nonnull Map<String, Object> extraFields) {
+        return new ProcessedJfrEvent(timestamp, measurementName, Map.of(), field, value, extraFields, List.of());
+    }
+
+    public static ProcessedJfrEvent of(
+            @Nullable Instant timestamp,
+            @Nonnull String measurementName,
+            @Nonnull String field,
+            long value,
+            @Nonnull Map<String, Object> extraFields,
+            @Nonnull List<String> stacktrace) {
+        return new ProcessedJfrEvent(timestamp, measurementName, Map.of(), field, value, extraFields, stacktrace);
+    }
+
+    public static ProcessedJfrEvent of(
+            @Nullable Instant timestamp,
+            @Nonnull String measurementName,
+            @Nonnull Map<String, String> tags,
+            @Nonnull String field,
+            long value) {
+        return new ProcessedJfrEvent(timestamp, measurementName, tags, field, value, Map.of(), List.of());
+    }
+
+    public static ProcessedJfrEvent of(
+            @Nullable Instant timestamp,
+            @Nonnull String measurementName,
+            @Nonnull Map<String, String> tags,
+            @Nonnull String field,
+            long value,
+            @Nonnull Map<String, Object> extraFields) {
+        return new ProcessedJfrEvent(timestamp, measurementName, tags, field, value, extraFields, List.of());
+    }
+
     public String toStringShort() {
         return "ProcessedJfrEvent{" +
                 "timestamp=" + timestamp +
                 ", measurementName='" + measurementName + '\'' +
+                ", tags=" + tags +
                 ", field='" + field + '\'' +
                 ", value=" + value +
                 ", stacktrace=" + (stacktrace.isEmpty() ? "[]" : stacktrace.get(0) + "...") +

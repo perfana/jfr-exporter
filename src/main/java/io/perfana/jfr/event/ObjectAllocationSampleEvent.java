@@ -64,13 +64,15 @@ public class ObjectAllocationSampleEvent implements OnJfrEvent, JfrEventProvider
 
         long now = System.currentTimeMillis();
 
-        if (now - lastAllocationRateReport.get() > reportIntervalMs) {
+        long timePeriodMs = now - lastAllocationRateReport.get();
+
+        if (timePeriodMs > reportIntervalMs) {
 
             lastAllocationRateReport.set(now);
 
             long totalAllocations = totalAllocationsBytes.getAndSet(0);
 
-            long allocationRate = totalAllocations / (reportIntervalMs / 1000);
+            long allocationRate = totalAllocations / (timePeriodMs / 1000);
 
             log.debug("Total allocations: %d bytes, allocation rate: %d bytes/s",
                     totalAllocations,
@@ -102,12 +104,13 @@ public class ObjectAllocationSampleEvent implements OnJfrEvent, JfrEventProvider
 
             Map<String, Object> extraFields = Map.of("objectClass", objectClassTranslation, "thread", event.getThread().getJavaName());
 
-            ProcessedJfrEvent processedEvent = new ProcessedJfrEvent(startTime,
+            ProcessedJfrEvent processedEvent = ProcessedJfrEvent.of(
+                    startTime,
                     "object-allocation-sample",
                     "bytes",
                     weight,
-                    stackTrace,
-                    extraFields);
+                    extraFields,
+                    stackTrace);
 
             eventProcessor.processEvent(processedEvent);
         }
