@@ -133,3 +133,9 @@ Use `-Dio.perfana.jfr.debug=true` to enable debug logging or `--debug` as argume
 For tracing (more debug logging) use: `-Dio.perfana.jfr.trace=true`
 
 Debug and tracing will output a lot of data, so only use for troubleshooting.
+
+# Releases
+
+### v0.3.0: January 2024
+* Added new events: Java Monitor waits and enters, Network read/write
+* New dashboard with new events
