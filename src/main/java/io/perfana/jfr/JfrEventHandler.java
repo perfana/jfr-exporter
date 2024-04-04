@@ -35,7 +35,14 @@ public class JfrEventHandler {
     void handle(String eventName, RecordedEvent event) {
         JfrEventSettings jfrEventSettings = events.get(eventName);
         if (jfrEventSettings != null) {
-            jfrEventSettings.getOnJfrEvent().onEvent(event);
+            try {
+                jfrEventSettings.getOnJfrEvent().onEvent(event);
+            } catch (Throwable e) {
+                log.error("Error handling event %s: %s", eventName, e.getMessage());
+            }
+        }
+        else {
+            log.trace("Skip handle event: no event settings for event %s", eventName);
         }
     }
 

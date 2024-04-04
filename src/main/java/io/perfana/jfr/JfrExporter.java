@@ -108,7 +108,14 @@ public class JfrExporter {
     }
 
     private JfrEventProcessor createInfluxEventProcessor(Arguments args) {
-        InfluxWriterConfig config = new InfluxWriterConfig(args.getInfluxUrl(), args.getInfluxDatabase(), args.getInfluxUser(), args.getInfluxPassword(), args.getInfluxRetentionPolicy(), args.getApplication());
+        InfluxWriterConfig config = new InfluxWriterConfig(
+                args.getInfluxUrl(),
+                args.getInfluxDatabase(),
+                args.getInfluxUser(),
+                args.getInfluxPassword(),
+                args.getInfluxRetentionPolicy(),
+                args.getApplication(),
+                args.isEnableStackTraces());
         InfluxWriter writer = new InfluxWriterNative(config);
         return new InfluxEventProcessor(writer);
     }

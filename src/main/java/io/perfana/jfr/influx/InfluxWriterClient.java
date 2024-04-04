@@ -28,6 +28,7 @@ import java.util.Map;
 public class InfluxWriterClient implements InfluxWriter, AutoCloseable {
 
     private static final Logger log = Logger.getLogger(InfluxWriterClient.class);
+    private final boolean enableStacktraces;
 
     private String application;
 
@@ -47,6 +48,8 @@ public class InfluxWriterClient implements InfluxWriter, AutoCloseable {
         );
 
         this.writeApi = influxDBClient.makeWriteApi();
+
+        this.enableStacktraces = config.enableStacktraces();
     }
 
     @Override
@@ -62,7 +65,7 @@ public class InfluxWriterClient implements InfluxWriter, AutoCloseable {
                 .addField(event.field(), event.value());
 
         if (!event.stacktrace().isEmpty()) {
-            String stacktrace = String.join("\n", event.stacktrace());
+            String stacktrace = InfluxWriter.formatStacktrace(event.stacktrace(), enableStacktraces);
             point.addField("stacktrace", stacktrace);
         }
 

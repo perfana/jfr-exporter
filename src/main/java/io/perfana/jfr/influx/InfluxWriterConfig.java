@@ -15,6 +15,12 @@
  */
 package io.perfana.jfr.influx;
 
-public record InfluxWriterConfig(String url, String database, String username, String password, String retentionPolicy,
-                                 String application) {
-}
+public record InfluxWriterConfig(
+        String url,
+        String database,
+        String username,
+        String password,
+        String retentionPolicy,
+        String application,
+        boolean enableStacktraces)
+{ }

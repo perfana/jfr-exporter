@@ -28,12 +28,11 @@ public class Arguments {
     private String influxUser = "";
     private String influxPassword = "";
     private boolean debug = false;
-    private String perfanaUrl = null;
-    private String perfanaApiKey = null;
     private Duration duration = null;
     private String influxRetentionPolicy = "autogen";
     private long bigObjectThresholdBytes = 256_000L;
     private long bigObjectSampleWeightThresholdBytes = 48_000_000L;
+    private boolean enableStackTraces = true;
 
     public static String usage() {
         return "Usage: java JfrExporter " +
@@ -41,9 +40,9 @@ public class Arguments {
                 " --duration <ISO-duration> --application,-a <application>" +
                 " --bigObjectThreshold <bytes>" +
                 " --bigObjectSampleWeightThreshold <bytes>" +
+                " --disableStackTraces" +
                 " --influxUrl <influxUrl> --influxDatabase <influxDatabase>" +
-                " --influxUser <influxUser> --influxPassword <influxPassword>" +
-                " --perfanaUrl <perfanaUrl> --perfanaApiKey <perfanaApiKey>";
+                " --influxUser <influxUser> --influxPassword <influxPassword>";
     }
 
     public static void print(String message) {
@@ -66,6 +65,11 @@ public class Arguments {
 
             if (matches(arg, "-d", "--debug", "debug")) {
                 arguments.debug = true;
+                continue;
+            }
+
+            if (matches(arg, "--disableStackTraces", "disableStackTraces")) {
+                arguments.enableStackTraces = false;
                 continue;
             }
 
@@ -97,16 +101,6 @@ public class Arguments {
 
             if (matches(arg, "", "--influxPassword", "influxPassword")) {
                 arguments.influxPassword = options.remove();
-                continue;
-            }
-
-            if (matches(arg, "", "--perfanaUrl", "perfanaUrl")) {
-                arguments.perfanaUrl = options.remove();
-                continue;
-            }
-
-            if (matches(arg, "", "--perfanaApiKey", "perfanaApiKey")) {
-                arguments.perfanaApiKey = options.remove();
                 continue;
             }
 
@@ -171,14 +165,6 @@ public class Arguments {
         return debug;
     }
 
-    public String getPerfanaUrl() {
-        return perfanaUrl;
-    }
-
-    public String getPerfanaApiKey() {
-        return perfanaApiKey;
-    }
-
     public Duration getDuration() {
         return duration;
     }
@@ -194,9 +180,8 @@ public class Arguments {
                 ", influxUser='" + influxUser + '\'' +
                 ", influxPassword='" + influxPassword + '\'' +
                 ", debug=" + debug +
-                ", perfanaUrl='" + perfanaUrl + '\'' +
-                ", perfanaApiKey='" + perfanaApiKey + '\'' +
                 ", duration=" + duration +
+                ", enableStackTraces=" + enableStackTraces +
                 '}';
     }
 
@@ -204,5 +189,8 @@ public class Arguments {
         return influxRetentionPolicy;
     }
 
+    public boolean isEnableStackTraces() {
+        return enableStackTraces;
+    }
 }
 

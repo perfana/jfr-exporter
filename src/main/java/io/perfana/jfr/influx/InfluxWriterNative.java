@@ -44,10 +44,15 @@ public class InfluxWriterNative implements InfluxWriter {
 
     private final AtomicLong nextFlush = new AtomicLong(System.currentTimeMillis());
 
-    private static final int maxBatchSize = 100;
+    private static final int maxBatchSize = 1_000;
     private static final int maxBatchAgeMs = 5_000;
 
-    private final Object lock = new Object();
+    private final Object bufferLock = new Object();
+
+    private final URI writeUri;
+
+    private final boolean enableStacktraces;
+
 
     public InfluxWriterNative(InfluxWriterConfig config) {
 
@@ -58,10 +63,15 @@ public class InfluxWriterNative implements InfluxWriter {
 
         this.config = config;
 
+        Map<String, String> requestParams = initializeRequestParams(config);
+        this.writeUri = createWriteUri(requestParams, config.url());
+
+        this.enableStacktraces = config.enableStacktraces();
     }
     @Override
     public boolean isHealthy() {
-        return false;
+        // TODO: implement health check
+        return true;
     }
 
     @Override
@@ -93,7 +103,7 @@ public class InfluxWriterNative implements InfluxWriter {
         fields.put(event.field(), String.valueOf(event.value()));
 
         if (!event.stacktrace().isEmpty()) {
-            String stacktrace = String.join("\n", event.stacktrace());
+            String stacktrace = InfluxWriter.formatStacktrace(event.stacktrace(), enableStacktraces);
             fields.put("stacktrace", escapeFieldForInflux(stacktrace));
         }
 
@@ -112,51 +122,56 @@ public class InfluxWriterNative implements InfluxWriter {
         StringBuilder data = new StringBuilder();
         data.append(key).append(" ").append(generatedFields).append(" ").append(timestampEpochNano);
 
-        log.debug("Writing event to InfluxDB: %s", event.toStringShort());
+        boolean useBuffer = true;
 
-        boolean useBuffer = false;
+        String dataToSend = data.toString();
 
         if (useBuffer) {
-            bufferAndSendToInflux(data);
+            bufferAndSendToInflux(dataToSend);
         } else {
-            sendInfluxData(data.toString());
+            sendInfluxData(dataToSend);
         }
     }
 
-    private void bufferAndSendToInflux(StringBuilder data) {
-        synchronized (lock) {
-            metricsBuffer.add(data.toString());
-            if ((metricsBuffer.size() > maxBatchSize) || (nextFlush.get() < System.currentTimeMillis())) {
-                try {
-                    log.debug("Flushing %d metrics to InfluxDB", metricsBuffer.size());
-                    String allData = String.join("\n", metricsBuffer);
-                    log.trace("Writing data to InfluxDB: %s", allData);
-                    sendInfluxData(allData);
-                    metricsBuffer.clear();
-                } finally {
-                    nextFlush.set(System.currentTimeMillis() + maxBatchAgeMs);
-                    metricsBuffer.clear();
-                }
+    private void bufferAndSendToInflux(String data) {
+        log.trace("Buffering data: %s", data);
+        Optional<String> metricsToWrite = addDataToBufferAndReturnAllWhenBufferIsFullThreadSafe(data);
+        metricsToWrite.ifPresent(this::sendInfluxData);
+    }
+
+    private Optional<String> addDataToBufferAndReturnAllWhenBufferIsFullThreadSafe(String data) {
+        synchronized (bufferLock) {
+            metricsBuffer.add(data);
+            if (bufferIsFullOrExpired()) {
+                return flushBuffer();
             }
         }
+        return Optional.empty();
+    }
+
+    @NotNull
+    private Optional<String> flushBuffer() {
+        log.debug("Flushing %d metrics to InfluxDB", metricsBuffer.size());
+        String allData = String.join("\n", metricsBuffer);
+        clearBuffer();
+        return Optional.of(allData);
+    }
+
+    private void clearBuffer() {
+        nextFlush.set(System.currentTimeMillis() + maxBatchAgeMs);
+        metricsBuffer.clear();
+    }
+
+    private boolean bufferIsFullOrExpired() {
+        return (metricsBuffer.size() > maxBatchSize) || (nextFlush.get() < System.currentTimeMillis());
     }
 
     private void sendInfluxData(String data) {
-        Map<String, String> requestParams = new HashMap<>();
-        requestParams.put("db", config.database());
-        requestParams.put("u", config.username());
-        requestParams.put("p", config.password());
-        requestParams.put("precision", "n");
-
-        String requestParamsString = requestParams.entrySet().stream()
-                .map(e -> e.getKey() + "=" + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8))
-                .collect(Collectors.joining("&"));
-
-        URI uri = URI.create(config.url() + "/write?" + requestParamsString);
+        log.trace("Writing data to InfluxDB: %s", data);
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(uri)
-                .timeout(Duration.ofMinutes(1))
+                .uri(writeUri)
+                .timeout(Duration.ofMinutes(2))
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .header("User-agent", "jfr-exporter/1.0")
                 .POST(HttpRequest.BodyPublishers.ofString(data))
@@ -176,6 +191,24 @@ public class InfluxWriterNative implements InfluxWriter {
             log.error("Failed to send request to InfluxDB: (%s) %s", e.getClass().getSimpleName(), e.getMessage());
         }
 
+    }
+
+    @NotNull
+    private URI createWriteUri(Map<String, String> requestParams1, String baseUrl) {
+        String requestParamsString = requestParams1.entrySet().stream()
+                .map(e -> e.getKey() + "=" + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8))
+                .collect(Collectors.joining("&"));
+
+        return URI.create(baseUrl + "/write?" + requestParamsString);
+    }
+
+    private static Map<String, String> initializeRequestParams(InfluxWriterConfig config) {
+        var params = new HashMap<String, String>();
+        params.put("db", config.database());
+        params.put("u", config.username());
+        params.put("p", config.password());
+        params.put("precision", "n");
+        return Collections.unmodifiableMap(params);
     }
 
     @NotNull
@@ -212,5 +245,6 @@ public class InfluxWriterNative implements InfluxWriter {
 
     @Override
     public void close() throws Exception {
+        flushBuffer().ifPresent(this::sendInfluxData);
     }
 }

@@ -45,7 +45,7 @@ To use JfrExporter:
 
 ## Download
 
-Direct [download version 0.3.0](https://github.com/perfana/jfr-exporter/releases/download/0.3.0/jfr-exporter-0.3.0.jar)
+Direct [download version 0.3.1](https://github.com/perfana/jfr-exporter/releases/download/0.3.1/jfr-exporter-0.3.1.jar)
 
 Download the latest release from the [releases page](https://github.com/perfana/jfr-exporter/releases).
 
@@ -73,6 +73,7 @@ The monitored process needs to be started with JFR enabled: `-XX:StartFlightReco
 ```bash
 Usage: java JfrExporter 
  --debug,-d 
+ --disableStackTraces
  --processId,-p <processId> 
  --duration <ISO-duration> 
  --application,-a <application>
@@ -85,6 +86,8 @@ Usage: java JfrExporter
 ```
 
 The default InfluxDB database name is `jfr`.
+
+Use `--disableStackTraces` to limit stacktraces to only the first three frames.
 
 Example to connect to process with id 1234 and send events with application name afterburner:
 ```bash
@@ -111,7 +114,7 @@ For reference: [list of JFR events](https://bestsolution-at.github.io/jfr-doc/in
 
 ## Stacktraces
 
-Stack traces for several events are sent to InfuxDB.
+Stack traces for several events are sent to InfluxDB.
 Via the dashboard you can see the details by clicking in the stacktrace columns.
 
 Example of a big memory allocation stacktrace:
@@ -139,3 +142,8 @@ Debug and tracing will output a lot of data, so only use for troubleshooting.
 ### v0.3.0: January 2024
 * Added new events: Java Monitor waits and enters, Network read/write
 * New dashboard with new events
+
+### v0.3.1: April 2024
+* Make use of buffer to send events in batches
+* Make event handling more robust by catching exceptions
+* Added disableStackTraces option to limit the amount of stacktrace data

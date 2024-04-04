@@ -16,16 +16,30 @@
 package io.perfana.jfr.influx;
 
 import io.perfana.jfr.ProcessedJfrEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
+import java.util.List;
 
 public interface InfluxWriter extends AutoCloseable {
+
+    String STACKTRACE_DELIMITER = " --- ";
+
     boolean isHealthy();
 
     void writeMetricPoint(ProcessedJfrEvent event);
 
     static long toEpochNs(Instant timestamp) {
         return (timestamp.toEpochMilli() * 1_000_000) + timestamp.getNano();
+    }
+
+    @NotNull
+    static String formatStacktrace(List<String> stacktrace1, boolean enableStacktraces) {
+        return enableStacktraces
+                ? String.join(STACKTRACE_DELIMITER, stacktrace1)
+                : stacktrace1.get(0)
+                    + STACKTRACE_DELIMITER + stacktrace1.get(1)
+                    + STACKTRACE_DELIMITER + stacktrace1.get(2);
     }
 
     @Override
