@@ -87,7 +87,7 @@ Usage: java JfrExporter
 
 The default InfluxDB database name is `jfr`.
 
-Use `--disableStackTraces` to limit stacktraces to only the first three frames.
+Use `--disableStackTraces` to limit stack traces to only the first three frames.
 
 Example to connect to process with id 1234 and send events with application name afterburner:
 ```bash
@@ -109,10 +109,11 @@ These JFR events are processed:
 * Memory (heap usage, large allocations)
 * Network read/write
 * Java Monitor waits and enters
+* Native Memory usage
 
-For reference: [list of JFR events](https://bestsolution-at.github.io/jfr-doc/index.html).
+For reference: [list of JFR events](https://sap.github.io/SapMachine/jfrevents/).
 
-## Stacktraces
+## Stack traces
 
 Stack traces for several events are sent to InfluxDB.
 Via the dashboard you can see the details by clicking in the stacktrace columns.
@@ -120,6 +121,12 @@ Via the dashboard you can see the details by clicking in the stacktrace columns.
 Example of a big memory allocation stacktrace:
 ![stacktrace example 1](images/stacktrace-2.jpg)
 
+## Native Memory
+
+To see the native memory usage, enable NMT on the process command line by adding:
+
+    -XX:NativeMemoryTracking=summary
+    
 ## Dashboard
 
 A Grafana dashboard can be imported to view the JFR metrics.
@@ -138,6 +145,9 @@ For tracing (more debug logging) use: `-Dio.perfana.jfr.trace=true`
 Debug and tracing will output a lot of data, so only use for troubleshooting.
 
 # Releases
+
+### v0.4.0: May 2024
+* Added new events: Native Memory events
 
 ### v0.3.0: January 2024
 * Added new events: Java Monitor waits and enters, Network read/write

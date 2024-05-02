@@ -85,6 +85,9 @@ public class JfrExporter {
                 SocketEvent socketEvent = new SocketEvent(eventProcessor);
                 socketEvent.getEventSettings().forEach(eventHandler::register);
 
+                NativeMemoryEvent nativeMemoryEvent = new NativeMemoryEvent(eventProcessor);
+                nativeMemoryEvent.getEventSettings().forEach(eventHandler::register);
+
                 JfrConnector jfrConnector = new JfrConnector(eventHandler);
 
                 if (args.getProcessId() == null) {
