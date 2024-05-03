@@ -54,7 +54,9 @@ public class SocketEvent implements OnJfrEvent, JfrEventProvider {
 
         @NotNull
         private static String checkDynamicPorts(int port) {
-            return port > 49151 && port < 65536 ? "dynamic" : String.valueOf(port);
+            // IANA ephemeral ports are from 49152 to 65535, but some (linux) use 32768 to 61000
+            // but found as low as 28006 in the wild on linux container with Java 21
+            return port >= 24_000 && port <= 65_535 ? "dynamic" : String.valueOf(port);
         }
     }
 
