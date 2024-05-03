@@ -23,6 +23,7 @@ import jdk.jfr.consumer.RecordedEvent;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 
 public class JavaStatisticsEvent implements OnJfrEvent, JfrEventProvider {
 
@@ -53,12 +54,14 @@ public class JavaStatisticsEvent implements OnJfrEvent, JfrEventProvider {
     private void processJavaClassloadingStatistics(RecordedEvent event) {
         long loaded = event.getLong("loadedClassCount");
         long unloaded = event.getLong("unloadedClassCount");
-        eventProcessor.processEvent(ProcessedJfrEvent.of(event, "classes-loaded", "loadedClassCount", value -> loaded - unloaded));
+
+        eventProcessor.processEvent(ProcessedJfrEvent.of(event.getStartTime(), "classes-loaded", "loadedClassCount", loaded - unloaded));
     }
 
     private void processJavaThreadStatistics(RecordedEvent event) {
-        eventProcessor.processEvent(ProcessedJfrEvent.of(event, "threads", "activeCount", value -> value));
-        eventProcessor.processEvent(ProcessedJfrEvent.of(event, "threads", "daemonCount", value -> value));
+        long activeCount = event.getLong("activeCount");
+        long daemonCount = event.getLong("daemonCount");
+        eventProcessor.processEvent(ProcessedJfrEvent.of(event.getStartTime(), "threads", "activeCount", activeCount, Map.of("daemonCount", daemonCount)));
     }
 
     @Override

@@ -15,9 +15,6 @@
  */
 package io.perfana.jfr;
 
-import io.perfana.jfr.event.MetricCalculation;
-import jdk.jfr.consumer.RecordedEvent;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.time.Instant;
@@ -54,23 +51,11 @@ public record ProcessedJfrEvent(@Nullable Instant timestamp,
         return new ProcessedJfrEvent(timestamp, measurementName, Map.of(), field, value, Map.of(), List.of());
     }
 
-    public static ProcessedJfrEvent of(RecordedEvent event, String measurementName, String metric, MetricCalculation calculation) {
-       double metricValue = event.getDouble(metric);
-       double metricValueCalculated = calculation.calculate(metricValue);
-       return of(
-               event.getStartTime(),
-               measurementName,
-               metric,
-               metricValueCalculated
-       );
-
-   }
-
     public static ProcessedJfrEvent of(
             @Nullable Instant timestamp,
             @Nonnull String measurementName,
             @Nonnull String field,
-            long value,
+            @Nonnull Number value,
             @Nonnull Map<String, Object> extraFields) {
         return new ProcessedJfrEvent(timestamp, measurementName, Map.of(), field, value, extraFields, List.of());
     }
@@ -79,7 +64,7 @@ public record ProcessedJfrEvent(@Nullable Instant timestamp,
             @Nullable Instant timestamp,
             @Nonnull String measurementName,
             @Nonnull String field,
-            long value,
+            @Nonnull Number value,
             @Nonnull Map<String, Object> extraFields,
             @Nonnull List<String> stacktrace) {
         return new ProcessedJfrEvent(timestamp, measurementName, Map.of(), field, value, extraFields, stacktrace);
@@ -90,7 +75,7 @@ public record ProcessedJfrEvent(@Nullable Instant timestamp,
             @Nonnull String measurementName,
             @Nonnull Map<String, String> tags,
             @Nonnull String field,
-            long value) {
+            @Nonnull Number value) {
         return new ProcessedJfrEvent(timestamp, measurementName, tags, field, value, Map.of(), List.of());
     }
 
@@ -99,7 +84,7 @@ public record ProcessedJfrEvent(@Nullable Instant timestamp,
             @Nonnull String measurementName,
             @Nonnull Map<String, String> tags,
             @Nonnull String field,
-            long value,
+            @Nonnull Number value,
             @Nonnull Map<String, Object> extraFields) {
         return new ProcessedJfrEvent(timestamp, measurementName, tags, field, value, extraFields, List.of());
     }
