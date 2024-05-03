@@ -105,11 +105,13 @@ These JFR events are processed:
 * Thread count
 * Classes loaded
 * Garbage Collection (GC) events
-* Safepoints
+* Safe points
 * Memory (heap usage, large allocations)
 * Network read/write
 * Java Monitor waits and enters
 * Native Memory usage
+* Container CPU and Memory (CPU Throttling, Memory request exceeded count)
+* Thread context switch rate
 
 For reference: [list of JFR events](https://sap.github.io/SapMachine/jfrevents/).
 
@@ -147,7 +149,12 @@ Debug and tracing will output a lot of data, so only use for troubleshooting.
 # Releases
 
 ### v0.4.0: May 2024
-* Added new events: Native Memory events
+* Added new events: 
+  * Native Memory
+  * Container CPU and memory
+  * Thread context switch rate
+* Updated dashboard with new events
+* Improved dashboard, application selection is working for all panels
 
 ### v0.3.0: January 2024
 * Added new events: Java Monitor waits and enters, Network read/write
