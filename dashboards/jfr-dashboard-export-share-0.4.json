@@ -2971,7 +2971,32 @@
           },
           "unit": "Bps"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "<blank> 127.0.0.1 33064"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -3123,7 +3148,32 @@
           },
           "unit": "Bps"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "<blank> 127.0.0.1 dynamic"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -4162,6 +4212,10 @@
                   "*"
                 ],
                 "type": "field"
+              },
+              {
+                "params": [],
+                "type": "difference"
               }
             ]
           ],
@@ -4373,7 +4427,7 @@
               "options": {
                 "mode": "exclude",
                 "names": [
-                  "swapMemoryUsage"
+                  "memoryUsage"
                 ],
                 "prefix": "All except:",
                 "readOnly": true
@@ -4554,7 +4608,7 @@
             [
               {
                 "params": [
-                  "memoryFailCount"
+                  "*"
                 ],
                 "type": "field"
               },
@@ -4573,7 +4627,7 @@
           ]
         }
       ],
-      "title": "Container memory usage",
+      "title": "Container memory request failures",
       "type": "timeseries"
     }
   ],
@@ -4605,13 +4659,13 @@
     ]
   },
   "time": {
-    "from": "2024-05-03T11:49:49.335Z",
-    "to": "2024-05-03T11:55:33.453Z"
+    "from": "2024-05-03T13:33:45.177Z",
+    "to": "2024-05-03T13:34:38.128Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Perfana JFR Metrics 0.4",
   "uid": "c53851d5-018a-477e-a991-363953a6af2b",
-  "version": 19,
+  "version": 20,
   "weekStart": ""
 }
