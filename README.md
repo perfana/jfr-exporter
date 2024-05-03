@@ -29,6 +29,12 @@ Java Monitor waits and enters:
 Network reads and writes:
 ![dashboard overview 5](images/dashboard-5.jpg)
 
+Native memory usage:
+![dashboard overview nmt](images/dashboard-native-memory.jpg)
+
+Container CPU throttle:
+![dashboard cpu throttle](images/dashboard-container-cpu-throttle.jpg)
+
 For some events stacktraces are present, such as where in the code a big memory allocation took place.
 (see screenshot below)
 
@@ -45,7 +51,7 @@ To use JfrExporter:
 
 ## Download
 
-Direct [download version 0.3.1](https://github.com/perfana/jfr-exporter/releases/download/0.3.1/jfr-exporter-0.3.1.jar)
+Direct [download version 0.4.0](https://github.com/perfana/jfr-exporter/releases/download/0.4.0/jfr-exporter-0.4.0.jar)
 
 Download the latest release from the [releases page](https://github.com/perfana/jfr-exporter/releases).
 
@@ -125,7 +131,7 @@ Example of a big memory allocation stacktrace:
 
 ## Native Memory
 
-To see the native memory usage, enable NMT on the process command line by adding:
+To see the native memory usage, enable Native Memory Tracking (NMT) on the process command line by adding:
 
     -XX:NativeMemoryTracking=summary
     
@@ -136,7 +142,7 @@ A Grafana dashboard can be imported to view the JFR metrics.
 Import the dashboard in the `dashboards` directory into Grafana and
 connect to an InfluxDB datasource that points to the `jfr` database.
 
-For version 0.3.0 and above use dashboard `jfr-dashboard-export-share-0.3.json`.
+For version 0.4.0 and above use dashboard `jfr-dashboard-export-share-0.4.json`.
 
 ## Troubleshoot
 
@@ -146,21 +152,3 @@ For tracing (more debug logging) use: `-Dio.perfana.jfr.trace=true`
 
 Debug and tracing will output a lot of data, so only use for troubleshooting.
 
-# Releases
-
-### v0.4.0: May 2024
-* Added new events: 
-  * Native Memory
-  * Container CPU and memory
-  * Thread context switch rate
-* Updated dashboard with new events
-* Improved dashboard, application selection is working for all panels
-
-### v0.3.0: January 2024
-* Added new events: Java Monitor waits and enters, Network read/write
-* New dashboard with new events
-
-### v0.3.1: April 2024
-* Make use of buffer to send events in batches
-* Make event handling more robust by catching exceptions
-* Added disableStackTraces option to limit the amount of stacktrace data

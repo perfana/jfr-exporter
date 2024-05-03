@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -41,4 +41,4 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "target/jfr-exporter-${{ env.GIT_TAG_NAME }}.jar"
-          body: "Release ${{ env.GIT_TAG_NAME }}"
+          bodyFile: CHANGELOG.md
