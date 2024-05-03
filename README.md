@@ -29,6 +29,12 @@ Java Monitor waits and enters:
 Network reads and writes:
 ![dashboard overview 5](images/dashboard-5.jpg)
 
+Native memory usage:
+![dashboard overview nmt](images/dashboard-native-memory.jpg)
+
+Container CPU throttle:
+![dashboard cpu throttle](images/dashboard-container-cpu-throttle.jpg)
+
 For some events stacktraces are present, such as where in the code a big memory allocation took place.
 (see screenshot below)
 
@@ -45,7 +51,7 @@ To use JfrExporter:
 
 ## Download
 
-Direct [download version 0.3.1](https://github.com/perfana/jfr-exporter/releases/download/0.3.1/jfr-exporter-0.3.1.jar)
+Direct [download version 0.4.0](https://github.com/perfana/jfr-exporter/releases/download/0.4.0/jfr-exporter-0.4.0.jar)
 
 Download the latest release from the [releases page](https://github.com/perfana/jfr-exporter/releases).
 
@@ -87,7 +93,7 @@ Usage: java JfrExporter
 
 The default InfluxDB database name is `jfr`.
 
-Use `--disableStackTraces` to limit stacktraces to only the first three frames.
+Use `--disableStackTraces` to limit stack traces to only the first three frames.
 
 Example to connect to process with id 1234 and send events with application name afterburner:
 ```bash
@@ -105,14 +111,17 @@ These JFR events are processed:
 * Thread count
 * Classes loaded
 * Garbage Collection (GC) events
-* Safepoints
+* Safe points
 * Memory (heap usage, large allocations)
 * Network read/write
 * Java Monitor waits and enters
+* Native Memory usage
+* Container CPU and Memory (CPU Throttling, Memory request exceeded count)
+* Thread context switch rate
 
-For reference: [list of JFR events](https://bestsolution-at.github.io/jfr-doc/index.html).
+For reference: [list of JFR events](https://sap.github.io/SapMachine/jfrevents/).
 
-## Stacktraces
+## Stack traces
 
 Stack traces for several events are sent to InfluxDB.
 Via the dashboard you can see the details by clicking in the stacktrace columns.
@@ -120,6 +129,12 @@ Via the dashboard you can see the details by clicking in the stacktrace columns.
 Example of a big memory allocation stacktrace:
 ![stacktrace example 1](images/stacktrace-2.jpg)
 
+## Native Memory
+
+To see the native memory usage, enable Native Memory Tracking (NMT) on the process command line by adding:
+
+    -XX:NativeMemoryTracking=summary
+    
 ## Dashboard
 
 A Grafana dashboard can be imported to view the JFR metrics.
@@ -127,7 +142,7 @@ A Grafana dashboard can be imported to view the JFR metrics.
 Import the dashboard in the `dashboards` directory into Grafana and
 connect to an InfluxDB datasource that points to the `jfr` database.
 
-For version 0.3.0 and above use dashboard `jfr-dashboard-export-share-0.3.json`.
+For version 0.4.0 and above use dashboard `jfr-dashboard-export-share-0.4.json`.
 
 ## Troubleshoot
 
@@ -137,13 +152,3 @@ For tracing (more debug logging) use: `-Dio.perfana.jfr.trace=true`
 
 Debug and tracing will output a lot of data, so only use for troubleshooting.
 
-# Releases
-
-### v0.3.0: January 2024
-* Added new events: Java Monitor waits and enters, Network read/write
-* New dashboard with new events
-
-### v0.3.1: April 2024
-* Make use of buffer to send events in batches
-* Make event handling more robust by catching exceptions
-* Added disableStackTraces option to limit the amount of stacktrace data

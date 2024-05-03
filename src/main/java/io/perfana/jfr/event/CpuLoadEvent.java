@@ -22,13 +22,18 @@ import io.perfana.jfr.ProcessedJfrEvent;
 import jdk.jfr.consumer.RecordedEvent;
 
 import java.time.Duration;
+import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CpuLoadEvent implements OnJfrEvent, JfrEventProvider {
 
     private static final Logger log = Logger.getLogger(CpuLoadEvent.class);
 
     public static final String JDK_CPULOAD = "jdk.CPULoad";
+    public static final String JDK_THREAD_CONTEXT_SWITCH_RATE = "jdk.ThreadContextSwitchRate";
+
     private final JfrEventProcessor eventProcessor;
 
     public CpuLoadEvent(JfrEventProcessor eventProcessor) {
@@ -38,17 +43,41 @@ public class CpuLoadEvent implements OnJfrEvent, JfrEventProvider {
 
     @Override
     public void onEvent(RecordedEvent event) {
-        String measurementName = "CPU";
 
-        MetricCalculation timesHundred = metric -> metric * 100.0;
-        eventProcessor.processEvent(ProcessedJfrEvent.of(event, measurementName, "machineTotal", timesHundred));
-        eventProcessor.processEvent(ProcessedJfrEvent.of(event, measurementName, "jvmSystem", timesHundred));
-        eventProcessor.processEvent(ProcessedJfrEvent.of(event, measurementName, "jvmUser", timesHundred));
+        String name = event.getEventType().getName();
+        Instant timestamp = event.getStartTime();
+
+        if (JDK_CPULOAD.equals(name)) {
+            String measurementName = "CPU";
+
+            double machineTotal = event.getDouble("machineTotal") * 100.0;
+            double jvmUser = event.getDouble("jvmUser") * 100.0;
+            double jvmSystem = event.getDouble("jvmSystem") * 100.0;
+
+            Map<String, Object> extraFields = new HashMap<>();
+            extraFields.put("jvmUser", jvmUser);
+            extraFields.put("jvmSystem", jvmSystem);
+
+            eventProcessor.processEvent(ProcessedJfrEvent.of(timestamp, measurementName, "machineTotal", machineTotal, extraFields));
+        }
+        else if (JDK_THREAD_CONTEXT_SWITCH_RATE.equals(name)) {
+            double switchRateValue = event.getDouble("switchRate");
+            ProcessedJfrEvent switchRate = ProcessedJfrEvent.of(timestamp, "thread-context-switch-rate", "switchRate", switchRateValue);
+            eventProcessor.processEvent(switchRate);
+        }
+        else {
+            log.debug("Ignoring unknown event: %s", name);
+        }
     }
 
     @Override
     public List<JfrEventSettings> getEventSettings() {
-        return List.of(JfrEventSettings.of(JDK_CPULOAD, this)
-                .withPeriod(Duration.ofSeconds(1)));
+
+        JfrEventSettings cpuLoadEvent = JfrEventSettings.of(JDK_CPULOAD, this)
+                .withPeriod(Duration.ofSeconds(1));
+        JfrEventSettings cpuThreadContextSwitchRate = JfrEventSettings.of(JDK_THREAD_CONTEXT_SWITCH_RATE, this)
+                .withPeriod(Duration.ofSeconds(10));
+
+        return List.of(cpuLoadEvent, cpuThreadContextSwitchRate);
     }
 }
