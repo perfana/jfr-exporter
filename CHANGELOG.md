@@ -1,5 +1,8 @@
 # Change log jfr-exporter
 
+### v0.4.1: May 2024
+* socket events: lowered dynamic ports to 16_000 
+
 ### v0.4.0: May 2024
 * Added new events:
     * Native Memory
