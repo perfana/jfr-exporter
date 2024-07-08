@@ -109,7 +109,6 @@ public class InfluxWriterNative implements InfluxWriter {
 
         boolean useBuffer = true;
 
-
         String dataToSend = key + " " + generatedFields + " " + timestampEpochNano;
 
         if (useBuffer) {
@@ -125,7 +124,7 @@ public class InfluxWriterNative implements InfluxWriter {
         }
         else if (origTags.size() == 1) {
             Map.Entry<String,String> entry = origTags.entrySet().iterator().next();
-            return "," + entry.getKey() + "=" + escapeFieldForInflux(entry.getValue());
+            return "," + entry.getKey() + "=" + escapeTagForInflux(entry.getValue());
         }
         else {
             // tags are sorted alphabetically for better performance in InfluxDB

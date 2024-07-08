@@ -32,6 +32,8 @@ public class NativeMemoryEvent implements OnJfrEvent, JfrEventProvider {
     public static final String JDK_NATIVE_MEMORY_USAGE = "jdk.NativeMemoryUsage";
     public static final String JDK_NATIVE_MEMORY_USAGE_TOTAL = "jdk.NativeMemoryUsageTotal";
     public static final String JDK_RESIDENT_SET_SIZE = "jdk.ResidentSetSize";
+    public static final String FIELD_COMMITTED = "committed";
+    public static final String FIELD_RESERVED = "reserved";
 
     private final JfrEventProcessor eventProcessor;
 
@@ -61,28 +63,29 @@ public class NativeMemoryEvent implements OnJfrEvent, JfrEventProvider {
     }
 
     private ProcessedJfrEvent processNativeMemoryUsageTotal(RecordedEvent event) {
-        long reservedMemory = event.getLong("reserved");
-        long committedMemory = event.getLong("committed");
+        long reservedMemory = event.getLong(FIELD_RESERVED);
+        long committedMemory = event.getLong(FIELD_COMMITTED);
 
         return ProcessedJfrEvent.of(
                 event.getStartTime(),
                 "memory-native-total",
-                "reserved",
+                FIELD_RESERVED,
                 reservedMemory,
-                Map.of("committed", committedMemory));
+                Map.of(FIELD_COMMITTED, committedMemory));
     }
 
     private ProcessedJfrEvent processNativeMemoryUsage(RecordedEvent event) {
-        long reservedMemory = event.getLong("reserved");
-        long committedMemory = event.getLong("committed");
+        long reservedMemory = event.getLong(FIELD_RESERVED);
+        long committedMemory = event.getLong(FIELD_COMMITTED);
         String nmtType = event.getString("type");
 
         return ProcessedJfrEvent.of(
                 event.getStartTime(),
                 "memory-native",
-                "reserved",
+                Map.of("type", nmtType),
+                FIELD_RESERVED,
                 reservedMemory,
-                Map.of("committed", committedMemory, "type", nmtType));
+                Map.of(FIELD_COMMITTED, committedMemory));
     }
 
     private ProcessedJfrEvent processResidentSetSize(RecordedEvent event) {
