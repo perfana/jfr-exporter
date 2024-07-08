@@ -36,9 +36,7 @@ public class InfluxWriterNative implements InfluxWriter {
 
     private static final Logger log = Logger.getLogger(InfluxWriterNative.class);
 
-
     private final HttpClient httpClient;
-    private final InfluxWriterConfig config;
 
     private final List<String> metricsBuffer = new ArrayList<>();
 
@@ -53,6 +51,7 @@ public class InfluxWriterNative implements InfluxWriter {
 
     private final boolean enableStacktraces;
 
+    private final String generatedTags;
 
     public InfluxWriterNative(InfluxWriterConfig config) {
 
@@ -61,12 +60,13 @@ public class InfluxWriterNative implements InfluxWriter {
                 .connectTimeout(Duration.ofSeconds(3))
                 .build();
 
-        this.config = config;
-
         Map<String, String> requestParams = initializeRequestParams(config);
         this.writeUri = createWriteUri(requestParams, config.url());
 
         this.enableStacktraces = config.enableStacktraces();
+
+        // prefixed with comma if tags is not empty
+        this.generatedTags = prepareTagsForInflux(config.tags());
     }
     @Override
     public boolean isHealthy() {
@@ -78,25 +78,13 @@ public class InfluxWriterNative implements InfluxWriter {
     public void writeMetricPoint(ProcessedJfrEvent event) {
 
         // Line protocol: https://github.com/influxdata/influxdb/blob/master/tsdb/README.md
-        // jdk.SafepointEnd,application=afterburner duration=0.172 1691147875098417583
+        // jdk.SafepointEnd,service=afterburner duration=0.172 1691147875098417583
 
         Instant timestamp = event.timestamp() == null ? Instant.now() : event.timestamp();
         long timestampEpochNano = InfluxWriter.toEpochNs(timestamp);
 
-        // tags are sorted alphabetically for better performance in InfluxDB
-        SortedMap<String, String> tags = new TreeMap<>();
-        tags.put("application", config.application());
-
-        for (Map.Entry<String, String> entry : event.tags().entrySet()) {
-            String escapedValue = escapeTagForInflux(entry.getValue());
-            tags.put(entry.getKey(), escapedValue);
-        }
-
-        String generatedTags = tags.entrySet().stream()
-                .map(e -> e.getKey() + "=" + e.getValue())
-                .collect(Collectors.joining(","));
-
-        String key = event.measurementName() + "," + generatedTags;
+        String extraTags = event.tags().isEmpty() ? "" : prepareTagsForInflux(event.tags());
+        String key = event.measurementName() + generatedTags + extraTags;
 
         // note: field String values must be quoted, unlike tags
         Map<String, String> fields = new HashMap<>();
@@ -119,17 +107,39 @@ public class InfluxWriterNative implements InfluxWriter {
                 .map(e -> e.getKey() + "=" + e.getValue())
                 .collect(Collectors.joining(","));
 
-        StringBuilder data = new StringBuilder();
-        data.append(key).append(" ").append(generatedFields).append(" ").append(timestampEpochNano);
-
         boolean useBuffer = true;
 
-        String dataToSend = data.toString();
+
+        String dataToSend = key + " " + generatedFields + " " + timestampEpochNano;
 
         if (useBuffer) {
             bufferAndSendToInflux(dataToSend);
         } else {
             sendInfluxData(dataToSend);
+        }
+    }
+
+    private static @NotNull String prepareTagsForInflux(Map<String,String> origTags) {
+        if (origTags.isEmpty()) {
+            return "";
+        }
+        else if (origTags.size() == 1) {
+            Map.Entry<String,String> entry = origTags.entrySet().iterator().next();
+            return "," + entry.getKey() + "=" + escapeFieldForInflux(entry.getValue());
+        }
+        else {
+            // tags are sorted alphabetically for better performance in InfluxDB
+            // (is this worth creating a 'heavy' TreeMap() here?)
+            SortedMap<String, String> sortedTags = new TreeMap<>();
+
+            for (Map.Entry<String, String> entry : origTags.entrySet()) {
+                String escapedValue = escapeTagForInflux(entry.getValue());
+                sortedTags.put(entry.getKey(), escapedValue);
+            }
+
+            return "," + sortedTags.entrySet().stream()
+                    .map(e -> e.getKey() + "=" + e.getValue())
+                    .collect(Collectors.joining(","));
         }
     }
 
@@ -172,7 +182,7 @@ public class InfluxWriterNative implements InfluxWriter {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(writeUri)
                 .timeout(Duration.ofMinutes(2))
-                .header("Content-Type", "application/x-www-form-urlencoded")
+                .header("Content-Type", "service/x-www-form-urlencoded")
                 .header("User-agent", "jfr-exporter/1.0")
                 .POST(HttpRequest.BodyPublishers.ofString(data))
                 .build();

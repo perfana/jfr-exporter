@@ -30,14 +30,14 @@ public class InfluxWriterClient implements InfluxWriter, AutoCloseable {
     private static final Logger log = Logger.getLogger(InfluxWriterClient.class);
     private final boolean enableStacktraces;
 
-    private String application;
+    private Map<String,String> tags;
 
     private InfluxDBClient influxDBClient;
 
     private WriteApi writeApi;
 
     public InfluxWriterClient(InfluxWriterConfig config) {
-        this.application = config.application();
+        this.tags = config.tags();
 
         this.influxDBClient = InfluxDBClientFactory.createV1(
                 config.url(),
@@ -61,7 +61,7 @@ public class InfluxWriterClient implements InfluxWriter, AutoCloseable {
     public void writeMetricPoint(ProcessedJfrEvent event) {
 
         Point point = Point.measurement(event.measurementName())
-                .addTag("application", application)
+                .addTags(tags)
                 .addField(event.field(), event.value());
 
         if (!event.stacktrace().isEmpty()) {

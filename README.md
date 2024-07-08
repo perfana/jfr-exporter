@@ -51,7 +51,7 @@ To use JfrExporter:
 
 ## Download
 
-Direct [download version 0.4.0](https://github.com/perfana/jfr-exporter/releases/download/0.4.0/jfr-exporter-0.4.0.jar)
+Direct [download version 0.5.0](https://github.com/perfana/jfr-exporter/releases/download/0.5.0/jfr-exporter-0.5.0.jar)
 
 Download the latest release from the [releases page](https://github.com/perfana/jfr-exporter/releases).
 
@@ -63,8 +63,8 @@ There is no need to enable JFR in the JVM arguments (`-XX:StartFlightRecording`)
 
 Options can be sent as `-javaagent:/path/to/jfr-exporter.jar=option1=value1,option2=value2`.
 
-Example: `-javaagent:/path/to/jfr-exporter.jar=debug,application=afterburner`, which will enable
-debug logging and set the application name to "afterburner".
+Example: `-javaagent:/path/to/jfr-exporter.jar=debug,tag=service/afterburner`, which will enable
+debug logging and set the tag `service` to `afterburner`.
 
 When used as agent, there is no need to add JFR activation to the JVM arguments.
 
@@ -82,22 +82,26 @@ Usage: java JfrExporter
  --disableStackTraces
  --processId,-p <processId> 
  --duration <ISO-duration> 
- --application,-a <application>
+ --tag <tag-name>/<tag-value>,
  --bigObjectThreshold <bytes>
  --bigObjectSampleWeightThreshold <bytes>
  --influxUrl <influxUrl> 
  --influxDatabase <influxDatabase>
  --influxUser <influxUser> 
  --influxPassword <influxPassword>
+
 ```
+
+Multiple tags can be specified.
 
 The default InfluxDB database name is `jfr`.
 
 Use `--disableStackTraces` to limit stack traces to only the first three frames.
 
-Example to connect to process with id 1234 and send events with application name afterburner:
+Example to connect to process with id 1234 and send events with service name afterburner-fe:
 ```bash
-java -jar jfr-exporter.jar --processId 1234 --application afterburner \
+java -jar jfr-exporter.jar --processId 1234 \
+  --tag service/afterburner-fe --tag systemUnderTest/afterburner --tag testEnvironment/performance-test \
   --duration PT30s --influxUrl http://localhost:8086
 ```
 
@@ -142,7 +146,17 @@ A Grafana dashboard can be imported to view the JFR metrics.
 Import the dashboard in the `dashboards` directory into Grafana and
 connect to an InfluxDB datasource that points to the `jfr` database.
 
-For version 0.4.0 and above use dashboard `jfr-dashboard-export-share-0.4.json`.
+For the dashboards to work, use the following tags:
+
+    tag=service/<service>,tag=systemUnderTest/<systemUnderTest>,tag=testEnvironment/<testEnvironment>
+
+For example:
+
+    tag=service/afterburner-fe,tag=systemUnderTest/afterburner,tag=testEnvironment/performance-test
+
+These tags are used to select the proper data for the test runs in the dashboard.
+
+For version 0.5.0 and above use dashboard `jfr-dashboard-export-share-0.5.json`.
 
 ## Troubleshoot
 

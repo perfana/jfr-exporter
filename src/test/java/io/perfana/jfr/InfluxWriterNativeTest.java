@@ -48,7 +48,7 @@ class InfluxWriterNativeTest {
                 "username",
                 "password",
                 "autogen",
-                "afterburner",
+                Map.of("service", "afterburner"),
                 true);
         return new InfluxWriterNative(config);
     }

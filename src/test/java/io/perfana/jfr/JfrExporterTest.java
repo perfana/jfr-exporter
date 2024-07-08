@@ -31,8 +31,8 @@ class JfrExporterTest {
 
     @Test
     void splitAgentArgs() {
-        String[] strings = JfrExporter.splitAgentArgs("--duration=PT2S,--application=MyApp");
-        assertEquals(4, strings.length);
+        String[] strings = JfrExporter.splitAgentArgs("--duration=PT2S,--tag=service/MyApp,tag=systemUnderTest/afterburner");
+        assertEquals(6, strings.length);
     }
 
 }

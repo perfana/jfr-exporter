@@ -80,10 +80,9 @@ public class NativeMemoryEvent implements OnJfrEvent, JfrEventProvider {
         return ProcessedJfrEvent.of(
                 event.getStartTime(),
                 "memory-native",
-                Map.of("type", nmtType),
                 "reserved",
                 reservedMemory,
-                Map.of("committed", committedMemory));
+                Map.of("committed", committedMemory, "type", nmtType));
     }
 
     private ProcessedJfrEvent processResidentSetSize(RecordedEvent event) {

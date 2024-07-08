@@ -120,7 +120,7 @@ public class JfrExporter {
                 args.getInfluxUser(),
                 args.getInfluxPassword(),
                 args.getInfluxRetentionPolicy(),
-                args.getApplication(),
+                args.getTags(),
                 args.isEnableStackTraces());
         InfluxWriter writer = new InfluxWriterNative(config);
         return new InfluxEventProcessor(writer);

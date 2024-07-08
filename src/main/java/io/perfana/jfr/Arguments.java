@@ -16,13 +16,11 @@
 package io.perfana.jfr;
 
 import java.time.Duration;
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Queue;
+import java.util.*;
 
 public class Arguments {
     private Integer processId = null;
-    private String application = "jfr-exporter";
+    private Map<String,String> tags = new HashMap<>();
     private String influxUrl = null;
     private String influxDatabase = "jfr";
     private String influxUser = "";
@@ -37,7 +35,9 @@ public class Arguments {
     public static String usage() {
         return "Usage: java JfrExporter " +
                 "--debug,-d --processId,-p <processId> " +
-                " --duration <ISO-duration> --application,-a <application>" +
+                " --duration <ISO-duration>" +
+                " --application,-a <application - deprecated, use tags instead>" +
+                " --tags, -t <comma separated list of tag-name=tag-value pairs>" +
                 " --bigObjectThreshold <bytes>" +
                 " --bigObjectSampleWeightThreshold <bytes>" +
                 " --disableStackTraces" +
@@ -80,7 +80,14 @@ public class Arguments {
             }
 
             if (matches(arg, "-a", "--application", "application")) {
-                arguments.application = options.remove();
+                print("WARN: application option is deprecated, use tags instead");
+                arguments.tags.put("application", options.remove());
+                continue;
+            }
+
+            if (matches(arg, "-t", "--tag", "tag")) {
+                // expect tag=name/value
+                addTagToMap(options.remove(), arguments.tags);
                 continue;
             }
 
@@ -126,6 +133,16 @@ public class Arguments {
         return arguments;
     }
 
+    private static void addTagToMap(String tagWithSlash, Map<String, String> map) {
+        String[] keyValue = tagWithSlash.split("/");
+        if (keyValue.length == 2) {
+            map.put(keyValue[0], keyValue[1]);
+        }
+        else {
+            print("ERROR invalid tags format, ignoring: " + tagWithSlash);
+        }
+    }
+
     private static boolean matches(String arg, String... matchers) {
         return Arrays.asList(matchers).contains(arg);
     }
@@ -134,8 +151,8 @@ public class Arguments {
         return processId;
     }
 
-    public String getApplication() {
-        return application;
+    public Map getTags() {
+        return Collections.unmodifiableMap(tags);
     }
 
     public long getBigObjectThresholdBytes() {
@@ -173,7 +190,7 @@ public class Arguments {
     public String toString() {
         return "Arguments{" +
                 "processId=" + processId +
-                ", application='" + application + '\'' +
+                ", tags ='" + tags + '\'' +
                 ", bigObjectThreshold='" + bigObjectThresholdBytes + '\'' +
                 ", influxUrl='" + influxUrl + '\'' +
                 ", influxDatabase='" + influxDatabase + '\'' +

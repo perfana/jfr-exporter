@@ -15,12 +15,14 @@
  */
 package io.perfana.jfr.influx;
 
+import java.util.Map;
+
 public record InfluxWriterConfig(
         String url,
         String database,
         String username,
         String password,
         String retentionPolicy,
-        String application,
+        Map<String,String> tags,
         boolean enableStacktraces)
 { }

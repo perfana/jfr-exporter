@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.Collections;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -46,7 +47,7 @@ class InfluxWriterTest {
                         "username",
                         "password",
                         "autogen",
-                        "afterburner",
+                        Map.of("service", "afterburner"),
                         true));
     }
 
