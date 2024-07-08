@@ -2979,7 +2979,6 @@
               "options": {
                 "mode": "exclude",
                 "names": [
-                  "<blank> 127.0.0.1 33064"
                 ],
                 "prefix": "All except:",
                 "readOnly": true
@@ -3148,32 +3147,7 @@
           },
           "unit": "Bps"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "<blank> 127.0.0.1 dynamic"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -3441,16 +3415,17 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
-            "spanNulls": true,
+            "showPoints": "always",
+            "spanNulls": 30000,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
             }
           },
+          "decimals": 0,
           "mappings": [],
           "min": 0,
           "thresholds": {
@@ -3466,7 +3441,7 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "hertz"
         },
         "overrides": []
       },
@@ -3476,10 +3451,13 @@
         "x": 12,
         "y": 90
       },
-      "id": 28,
+      "id": 31,
       "options": {
         "legend": {
-          "calcs": [],
+          "calcs": [
+            "min",
+            "max"
+          ],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
@@ -3491,7 +3469,7 @@
       },
       "targets": [
         {
-          "alias": "$col",
+          "alias": "switch rate",
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB_JFR}"
@@ -3510,7 +3488,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "memory-resident-set-size",
+          "measurement": "thread-context-switch-rate",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -3519,7 +3497,7 @@
             [
               {
                 "params": [
-                  "*"
+                  "switchRate"
                 ],
                 "type": "field"
               },
@@ -3538,7 +3516,7 @@
           ]
         }
       ],
-      "title": "Memory Resident Set Size",
+      "title": "Thread context switch rate",
       "type": "timeseries"
     },
     {
@@ -3746,7 +3724,32 @@
           },
           "unit": "bytes"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Thread Stack"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -4001,17 +4004,16 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "always",
-            "spanNulls": 30000,
+            "showPoints": "never",
+            "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "normal"
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
             }
           },
-          "decimals": 0,
           "mappings": [],
           "min": 0,
           "thresholds": {
@@ -4027,7 +4029,7 @@
               }
             ]
           },
-          "unit": "hertz"
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -4037,13 +4039,10 @@
         "x": 12,
         "y": 108
       },
-      "id": 31,
+      "id": 28,
       "options": {
         "legend": {
-          "calcs": [
-            "min",
-            "max"
-          ],
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
@@ -4055,7 +4054,7 @@
       },
       "targets": [
         {
-          "alias": "switch rate",
+          "alias": "$col",
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB_JFR}"
@@ -4074,7 +4073,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "thread-context-switch-rate",
+          "measurement": "memory-resident-set-size",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -4083,7 +4082,7 @@
             [
               {
                 "params": [
-                  "switchRate"
+                  "*"
                 ],
                 "type": "field"
               },
@@ -4102,7 +4101,7 @@
           ]
         }
       ],
-      "title": "Thread context switch rate",
+      "title": "Memory Resident Set Size",
       "type": "timeseries"
     },
     {
@@ -4659,8 +4658,8 @@
     ]
   },
   "time": {
-    "from": "2024-05-03T13:33:45.177Z",
-    "to": "2024-05-03T13:34:38.128Z"
+    "from": "now-5m",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
