@@ -181,7 +181,7 @@
           "measurement": "CPU",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(*) FROM \"CPU\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(*) FROM \"CPU\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -209,13 +209,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -334,7 +334,7 @@
           "measurement": "heap",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(*) FROM \"heap\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(*) FROM \"heap\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -362,13 +362,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -488,7 +488,7 @@
           "measurement": "threads",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(*) FROM \"threads\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(*) FROM \"threads\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -516,13 +516,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -627,7 +627,7 @@
           "measurement": "allocation-rate-bytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"bytes\" FROM \"allocation-rate-bytes\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"bytes\" FROM \"allocation-rate-bytes\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -651,13 +651,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -769,7 +769,7 @@
           "measurement": "youngGc",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"duration-ms\") FROM \"youngGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(\"duration-ms\") FROM \"youngGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -797,13 +797,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -874,7 +874,7 @@
           "measurement": "youngGc",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"duration-ms\") FROM \"youngGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT max(\"duration-ms\") FROM \"youngGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -902,13 +902,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -979,7 +979,7 @@
           "measurement": "youngGc",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"duration-ms\") FROM \"youngGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT sum(\"duration-ms\") FROM \"youngGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1007,13 +1007,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -1125,7 +1125,7 @@
           "measurement": "oldGc",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"duration-ms\") FROM \"oldGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(\"duration-ms\") FROM \"oldGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1153,13 +1153,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -1229,7 +1229,7 @@
           "measurement": "oldGc",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"duration-ms\") FROM \"oldGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT max(\"duration-ms\") FROM \"oldGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1257,13 +1257,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -1333,7 +1333,7 @@
           "measurement": "oldGc",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"duration-ms\") FROM \"oldGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT sum(\"duration-ms\") FROM \"oldGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1361,13 +1361,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -1479,7 +1479,7 @@
           "measurement": "safepoint",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"duration-ms\") FROM \"safepoint\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(\"duration-ms\") FROM \"safepoint\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1507,13 +1507,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -1583,7 +1583,7 @@
           "measurement": "safepoint",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT distinct(\"duration-ms\") FROM \"safepoint\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT distinct(\"duration-ms\") FROM \"safepoint\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1611,13 +1611,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -1687,7 +1687,7 @@
           "measurement": "safepoint",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"duration-ms\") FROM \"safepoint\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT sum(\"duration-ms\") FROM \"safepoint\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1715,13 +1715,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -1838,7 +1838,7 @@
           "measurement": "big-allocations",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT distinct(\"bytes\") FROM \"big-allocations\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT distinct(\"bytes\") FROM \"big-allocations\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1866,13 +1866,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -1975,7 +1975,7 @@
           "measurement": "big-allocations",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"bytes\" FROM \"big-allocations\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"bytes\" FROM \"big-allocations\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1999,13 +1999,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         },
@@ -2059,13 +2059,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -2217,7 +2217,7 @@
           "measurement": "object-allocation-sample",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT distinct(\"bytes\") FROM \"object-allocation-sample\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT distinct(\"bytes\") FROM \"object-allocation-sample\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2245,13 +2245,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -2354,7 +2354,7 @@
           "measurement": "object-allocation-sample",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"bytes\" FROM \"object-allocation-sample\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"bytes\" FROM \"object-allocation-sample\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2378,13 +2378,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         },
@@ -2398,7 +2398,7 @@
           "measurement": "object-allocation-sample",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"stacktrace\", \"objectClass\", \"thread\" FROM \"object-allocation-sample\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"stacktrace\", \"objectClass\", \"thread\" FROM \"object-allocation-sample\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -2438,13 +2438,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -2585,7 +2585,7 @@
           "measurement": "java-monitor-enter",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"duration-ns\" FROM \"java-monitor-enter\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"duration-ns\" FROM \"java-monitor-enter\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2609,13 +2609,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -2718,7 +2718,7 @@
           "measurement": "java-monitor-enter",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"duration-ns\" FROM \"java-monitor-enter\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"duration-ns\" FROM \"java-monitor-enter\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2742,13 +2742,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         },
@@ -2818,13 +2818,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -2968,7 +2968,7 @@
           "measurement": "java-monitor-wait",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"duration-ns\" FROM \"java-monitor-wait\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"duration-ns\" FROM \"java-monitor-wait\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2992,13 +2992,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -3101,7 +3101,7 @@
           "measurement": "java-monitor-wait",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"duration-ns\" FROM \"java-monitor-wait\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"duration-ns\" FROM \"java-monitor-wait\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3125,13 +3125,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         },
@@ -3380,7 +3380,7 @@
           "measurement": "socket-read-rate-bytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"bytes\") FROM \"socket-read-rate-bytes\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval), \"port\"::tag, \"host\"::tag, \"address\"::tag",
+          "query": "SELECT sum(\"bytes\") FROM \"socket-read-rate-bytes\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval), \"port\"::tag, \"host\"::tag, \"address\"::tag",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3408,13 +3408,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -3551,7 +3551,7 @@
           "measurement": "socket-write-rate-bytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"bytes\") FROM \"socket-write-rate-bytes\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval), \"port\"::tag, \"address\"::tag, \"host\"::tag fill(null)",
+          "query": "SELECT sum(\"bytes\") FROM \"socket-write-rate-bytes\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval), \"port\"::tag, \"address\"::tag, \"host\"::tag fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3579,13 +3579,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -3704,7 +3704,7 @@
           "measurement": "classes-loaded",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"loadedClassCount\") FROM \"classes-loaded\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(\"loadedClassCount\") FROM \"classes-loaded\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3732,13 +3732,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -3854,7 +3854,7 @@
           "measurement": "memory-resident-set-size",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(*) FROM \"memory-resident-set-size\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(*) FROM \"memory-resident-set-size\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3882,13 +3882,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -4012,7 +4012,7 @@
           "measurement": "memory-native",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"committed\") FROM \"memory-native\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval), \"type\"::tag fill(null)",
+          "query": "SELECT max(\"committed\") FROM \"memory-native\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval), \"type\"::tag fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4040,13 +4040,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -4170,7 +4170,7 @@
           "measurement": "memory-native",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"reserved\") FROM \"memory-native\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval), \"type\"::tag fill(null)",
+          "query": "SELECT max(\"reserved\") FROM \"memory-native\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval), \"type\"::tag fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4198,13 +4198,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -4322,7 +4322,7 @@
           "measurement": "memory-native-total",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(*) FROM \"memory-native-total\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(*) FROM \"memory-native-total\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4350,13 +4350,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -4476,7 +4476,7 @@
           "measurement": "thread-context-switch-rate",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(\"switchRate\") FROM \"thread-context-switch-rate\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT max(\"switchRate\") FROM \"thread-context-switch-rate\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4504,13 +4504,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -4615,7 +4615,7 @@
           "measurement": "container-cpu-throttling-time",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT difference(*) FROM \"container-cpu-throttling-time\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT difference(*) FROM \"container-cpu-throttling-time\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4643,13 +4643,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -4754,7 +4754,7 @@
           "measurement": "container-cpu-throttling-slices",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT difference(*) FROM \"container-cpu-throttling-slices\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT difference(*) FROM \"container-cpu-throttling-slices\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4782,13 +4782,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -4893,7 +4893,7 @@
           "measurement": "container-memory-usage",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(*) FROM \"container-memory-usage\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT max(*) FROM \"container-memory-usage\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4917,13 +4917,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -5028,7 +5028,7 @@
           "measurement": "container-memory-usage-failures",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT difference(*) FROM \"container-memory-usage-failures\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT difference(*) FROM \"container-memory-usage-failures\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$test_environment$/ AND \"systemUnderTest\"::tag =~ /^$system_under_test$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -5056,13 +5056,13 @@
               "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
-              "value": "/^$testEnvironment$/"
+              "value": "/^$test_environment$/"
             },
             {
               "condition": "AND",
               "key": "systemUnderTest::tag",
               "operator": "=~",
-              "value": "/^$systemUnderTest$/"
+              "value": "/^$system_under_test$/"
             }
           ]
         }
@@ -5090,7 +5090,7 @@
         "hide": 0,
         "includeAll": false,
         "multi": false,
-        "name": "systemUnderTest",
+        "name": "system_under_test",
         "options": [],
         "query": "SHOW TAG VALUES WITH KEY = \"systemUnderTest\"",
         "refresh": 1,
@@ -5105,13 +5105,13 @@
           "type": "influxdb",
           "uid": "${DS_INFLUXDB_JFR}"
         },
-        "definition": "SHOW TAG VALUES WITH KEY = \"testEnvironment\" WHERE \"systemUnderTest\" =~ /$systemUnderTest/",
+        "definition": "SHOW TAG VALUES WITH KEY = \"testEnvironment\" WHERE \"systemUnderTest\" =~ /$system_under_test/",
         "hide": 0,
         "includeAll": false,
         "multi": false,
-        "name": "testEnvironment",
+        "name": "test_environment",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"testEnvironment\" WHERE \"systemUnderTest\" =~ /$systemUnderTest/",
+        "query": "SHOW TAG VALUES WITH KEY = \"testEnvironment\" WHERE \"systemUnderTest\" =~ /$system_under_test/",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -5124,13 +5124,13 @@
           "type": "influxdb",
           "uid": "${DS_INFLUXDB_JFR}"
         },
-        "definition": "SHOW TAG VALUES WITH KEY = \"service\" WHERE \"systemUnderTest\" =~ /$systemUnderTest/ AND \"testEnvironment\" =~ /$testEnvironment/",
+        "definition": "SHOW TAG VALUES WITH KEY = \"service\" WHERE \"systemUnderTest\" =~ /$system_under_test/ AND \"testEnvironment\" =~ /$test_environment/",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "service",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"service\" WHERE \"systemUnderTest\" =~ /$systemUnderTest/ AND \"testEnvironment\" =~ /$testEnvironment/",
+        "query": "SHOW TAG VALUES WITH KEY = \"service\" WHERE \"systemUnderTest\" =~ /$system_under_test/ AND \"testEnvironment\" =~ /$test_environment/",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
