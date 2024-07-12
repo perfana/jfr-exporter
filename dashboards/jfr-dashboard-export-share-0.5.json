@@ -68,7 +68,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -84,6 +83,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -142,6 +142,7 @@
         "y": 0
       },
       "id": 2,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -181,7 +182,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT max(*) FROM \"CPU\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -234,6 +235,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -293,6 +295,7 @@
         "y": 0
       },
       "id": 7,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -332,7 +335,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT max(*) FROM \"heap\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -385,6 +388,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -445,6 +449,7 @@
         "y": 9
       },
       "id": 6,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -483,6 +488,8 @@
           "measurement": "threads",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(*) FROM \"threads\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -507,15 +514,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -535,6 +542,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -593,6 +601,7 @@
         "y": 9
       },
       "id": 4,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -618,6 +627,8 @@
           "measurement": "allocation-rate-bytes",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT \"bytes\" FROM \"allocation-rate-bytes\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -638,15 +649,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -666,6 +677,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -721,6 +733,7 @@
         "y": 18
       },
       "id": 3,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [],
@@ -756,6 +769,8 @@
           "measurement": "youngGc",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(\"duration-ms\") FROM \"youngGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -780,15 +795,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -832,6 +847,7 @@
         "y": 18
       },
       "id": 10,
+      "interval": "10s",
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -844,9 +860,10 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -857,6 +874,8 @@
           "measurement": "youngGc",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(\"duration-ms\") FROM \"youngGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -881,15 +900,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -933,6 +952,7 @@
         "y": 18
       },
       "id": 24,
+      "interval": "10s",
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -945,9 +965,10 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -958,6 +979,8 @@
           "measurement": "youngGc",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT sum(\"duration-ms\") FROM \"youngGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -982,15 +1005,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -1010,6 +1033,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1045,8 +1069,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1065,6 +1088,7 @@
         "y": 27
       },
       "id": 8,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [],
@@ -1101,6 +1125,8 @@
           "measurement": "oldGc",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(\"duration-ms\") FROM \"oldGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1125,15 +1151,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -1157,8 +1183,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1177,6 +1202,7 @@
         "y": 27
       },
       "id": 12,
+      "interval": "10s",
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1189,9 +1215,10 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1202,6 +1229,8 @@
           "measurement": "oldGc",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(\"duration-ms\") FROM \"oldGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1226,15 +1255,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -1258,8 +1287,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1278,6 +1306,7 @@
         "y": 27
       },
       "id": 22,
+      "interval": "10s",
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1290,9 +1319,10 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1303,6 +1333,8 @@
           "measurement": "oldGc",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT sum(\"duration-ms\") FROM \"oldGc\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1327,15 +1359,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -1355,6 +1387,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1390,8 +1423,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1410,6 +1442,7 @@
         "y": 36
       },
       "id": 9,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [],
@@ -1446,6 +1479,8 @@
           "measurement": "safepoint",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(\"duration-ms\") FROM \"safepoint\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1470,15 +1505,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -1502,8 +1537,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1522,6 +1556,7 @@
         "y": 36
       },
       "id": 11,
+      "interval": "10s",
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1534,9 +1569,10 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1547,6 +1583,8 @@
           "measurement": "safepoint",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT distinct(\"duration-ms\") FROM \"safepoint\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1571,15 +1609,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -1603,8 +1641,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1623,6 +1660,7 @@
         "y": 36
       },
       "id": 23,
+      "interval": "10s",
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1635,9 +1673,10 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1648,6 +1687,8 @@
           "measurement": "safepoint",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT sum(\"duration-ms\") FROM \"safepoint\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1672,15 +1713,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -1700,6 +1741,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1738,8 +1780,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1758,6 +1799,7 @@
         "y": 45
       },
       "id": 13,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -1796,6 +1838,8 @@
           "measurement": "big-allocations",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT distinct(\"bytes\") FROM \"big-allocations\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1820,15 +1864,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -1858,8 +1902,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1902,6 +1945,7 @@
         "y": 45
       },
       "id": 15,
+      "interval": "10s",
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -1920,7 +1964,7 @@
           }
         ]
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1931,6 +1975,8 @@
           "measurement": "big-allocations",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT \"bytes\" FROM \"big-allocations\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1951,15 +1997,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         },
@@ -1973,7 +2019,7 @@
           "measurement": "big-allocations",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"stacktrace\",\"objectClass\" FROM \"default\".\"big-allocations\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"stacktrace\",\"objectClass\" FROM \"default\".\"big-allocations\" WHERE $timeFilter",
           "rawQuery": false,
           "refId": "B",
           "resultFormat": "time_series",
@@ -2011,15 +2057,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -2074,6 +2120,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2112,8 +2159,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2132,6 +2178,7 @@
         "y": 54
       },
       "id": 16,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -2170,6 +2217,8 @@
           "measurement": "object-allocation-sample",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT distinct(\"bytes\") FROM \"object-allocation-sample\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2194,15 +2243,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -2232,8 +2281,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2276,6 +2324,7 @@
         "y": 54
       },
       "id": 17,
+      "interval": "10s",
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -2294,7 +2343,7 @@
           }
         ]
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -2305,6 +2354,8 @@
           "measurement": "object-allocation-sample",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT \"bytes\" FROM \"object-allocation-sample\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2325,15 +2376,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         },
@@ -2347,8 +2398,8 @@
           "measurement": "object-allocation-sample",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"stacktrace\",\"objectClass\" FROM \"default\".\"big-allocations\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
-          "rawQuery": false,
+          "query": "SELECT \"stacktrace\", \"objectClass\", \"thread\" FROM \"object-allocation-sample\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
@@ -2385,15 +2436,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -2448,6 +2499,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2488,8 +2540,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2508,6 +2559,7 @@
         "y": 63
       },
       "id": 19,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -2533,8 +2585,8 @@
           "measurement": "java-monitor-enter",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"bytes\") FROM \"SocketRead\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
+          "query": "SELECT \"duration-ns\" FROM \"java-monitor-enter\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2555,15 +2607,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -2593,8 +2645,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2637,6 +2688,7 @@
         "y": 63
       },
       "id": 21,
+      "interval": "10s",
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -2655,7 +2707,7 @@
           }
         ]
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -2666,6 +2718,8 @@
           "measurement": "java-monitor-enter",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT \"duration-ns\" FROM \"java-monitor-enter\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2686,15 +2740,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         },
@@ -2708,7 +2762,7 @@
           "measurement": "java-monitor-enter",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"stacktrace\",\"objectClass\" FROM \"default\".\"big-allocations\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"stacktrace\",\"objectClass\" FROM \"default\".\"big-allocations\" WHERE $timeFilter",
           "rawQuery": false,
           "refId": "B",
           "resultFormat": "time_series",
@@ -2762,15 +2816,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -2829,6 +2883,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2869,8 +2924,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2889,6 +2943,7 @@
         "y": 72
       },
       "id": 25,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -2913,8 +2968,8 @@
           "measurement": "java-monitor-wait",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"bytes\") FROM \"SocketRead\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
+          "query": "SELECT \"duration-ns\" FROM \"java-monitor-wait\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2935,15 +2990,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -2973,8 +3028,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3017,6 +3071,7 @@
         "y": 72
       },
       "id": 26,
+      "interval": "10s",
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -3035,7 +3090,7 @@
           }
         ]
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -3046,6 +3101,8 @@
           "measurement": "java-monitor-wait",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT \"duration-ns\" FROM \"java-monitor-wait\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3066,15 +3123,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         },
@@ -3088,7 +3145,7 @@
           "measurement": "java-monitor-wait",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"stacktrace\",\"objectClass\" FROM \"default\".\"big-allocations\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "query": "SELECT \"stacktrace\",\"objectClass\" FROM \"default\".\"big-allocations\" WHERE $timeFilter",
           "rawQuery": false,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3212,6 +3269,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3252,8 +3310,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3272,6 +3329,7 @@
         "y": 81
       },
       "id": 18,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -3323,7 +3381,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT sum(\"bytes\") FROM \"socket-read-rate-bytes\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval), \"port\"::tag, \"host\"::tag, \"address\"::tag",
-          "rawQuery": false,
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3348,15 +3406,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -3376,6 +3434,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3416,8 +3475,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3436,6 +3494,7 @@
         "y": 81
       },
       "id": 20,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -3491,9 +3550,9 @@
           ],
           "measurement": "socket-write-rate-bytes",
           "orderByTime": "ASC",
-          "policy": "autogen",
-          "query": "SELECT sum(\"bytes\") FROM \"SocketRead\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
+          "policy": "default",
+          "query": "SELECT sum(\"bytes\") FROM \"socket-write-rate-bytes\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval), \"port\"::tag, \"address\"::tag, \"host\"::tag fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3518,15 +3577,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -3546,6 +3605,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3587,8 +3647,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3607,6 +3666,7 @@
         "y": 90
       },
       "id": 5,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -3644,6 +3704,8 @@
           "measurement": "classes-loaded",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(\"loadedClassCount\") FROM \"classes-loaded\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3668,15 +3730,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -3696,157 +3758,7 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 3,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "always",
-            "spanNulls": 30000,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 1,
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "hertz"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 90
-      },
-      "id": 31,
-      "options": {
-        "legend": {
-          "calcs": [
-            "min",
-            "max"
-          ],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "alias": "switch rate",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "${DS_INFLUXDB_JFR}"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "thread-context-switch-rate",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "switchRate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "max"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "service::tag",
-              "operator": "=~",
-              "value": "/^$service$/"
-            },
-            {
-              "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
-              "key": "testEnvironment::tag",
-              "operator": "=~",
-              "value": "/^$testEnvironment$/"
-            }
-          ]
-        }
-      ],
-      "title": "Thread context switch rate",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "${DS_INFLUXDB_JFR}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3886,8 +3798,157 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 90
+      },
+      "id": 28,
+      "interval": "10s",
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "$col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB_JFR}"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "memory-resident-set-size",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT max(*) FROM \"memory-resident-set-size\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "*"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "max"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "service::tag",
+              "operator": "=~",
+              "value": "/^$service$/"
+            },
+            {
+              "condition": "AND",
+              "key": "testEnvironment::tag",
+              "operator": "=~",
+              "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
+            }
+          ]
+        }
+      ],
+      "title": "Memory Resident Set Size",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB_JFR}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 3,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3906,6 +3967,7 @@
         "y": 99
       },
       "id": 29,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -3950,6 +4012,8 @@
           "measurement": "memory-native",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(\"committed\") FROM \"memory-native\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval), \"type\"::tag fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -3974,15 +4038,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -4002,6 +4066,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -4041,8 +4106,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4052,32 +4116,7 @@
           },
           "unit": "bytes"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "Thread Stack"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -4086,6 +4125,7 @@
         "y": 99
       },
       "id": 30,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -4130,6 +4170,8 @@
           "measurement": "memory-native",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(\"reserved\") FROM \"memory-native\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval), \"type\"::tag fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -4154,15 +4196,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -4182,6 +4224,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -4221,8 +4264,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4241,6 +4283,7 @@
         "y": 108
       },
       "id": 27,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -4280,7 +4323,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT max(*) FROM \"memory-native-total\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -4305,15 +4348,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -4333,6 +4376,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -4356,24 +4400,24 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
-            "spanNulls": true,
+            "showPoints": "always",
+            "spanNulls": 30000,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
             }
           },
+          "decimals": 0,
           "mappings": [],
           "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4381,7 +4425,7 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "hertz"
         },
         "overrides": []
       },
@@ -4391,10 +4435,14 @@
         "x": 12,
         "y": 108
       },
-      "id": 28,
+      "id": 31,
+      "interval": "10s",
       "options": {
         "legend": {
-          "calcs": [],
+          "calcs": [
+            "min",
+            "max"
+          ],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
@@ -4406,7 +4454,7 @@
       },
       "targets": [
         {
-          "alias": "$col",
+          "alias": "switch rate",
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB_JFR}"
@@ -4425,16 +4473,18 @@
               "type": "fill"
             }
           ],
-          "measurement": "memory-resident-set-size",
+          "measurement": "thread-context-switch-rate",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT max(\"switchRate\") FROM \"thread-context-switch-rate\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "*"
+                  "switchRate"
                 ],
                 "type": "field"
               },
@@ -4452,20 +4502,20 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
       ],
-      "title": "Memory Resident Set Size",
+      "title": "Thread context switch rate",
       "type": "timeseries"
     },
     {
@@ -4480,6 +4530,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -4519,8 +4570,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4539,6 +4589,7 @@
         "y": 117
       },
       "id": 32,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -4564,8 +4615,8 @@
           "measurement": "container-cpu-throttling-time",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(*) FROM \"memory-native-total\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
+          "query": "SELECT difference(*) FROM \"container-cpu-throttling-time\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -4590,15 +4641,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -4618,6 +4669,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -4657,8 +4709,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4677,6 +4728,7 @@
         "y": 117
       },
       "id": 33,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -4702,8 +4754,8 @@
           "measurement": "container-cpu-throttling-slices",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(*) FROM \"memory-native-total\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
+          "query": "SELECT difference(*) FROM \"container-cpu-throttling-slices\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -4728,15 +4780,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -4756,6 +4808,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -4795,8 +4848,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4806,32 +4858,7 @@
           },
           "unit": "decbytes"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "memoryUsage"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -4840,6 +4867,7 @@
         "y": 126
       },
       "id": 34,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -4865,8 +4893,8 @@
           "measurement": "container-memory-usage",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(*) FROM \"memory-native-total\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
+          "query": "SELECT max(*) FROM \"container-memory-usage\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -4887,15 +4915,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -4915,6 +4943,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -4954,8 +4983,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4974,6 +5002,7 @@
         "y": 126
       },
       "id": 35,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [
@@ -4999,8 +5028,8 @@
           "measurement": "container-memory-usage-failures",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT max(*) FROM \"memory-native-total\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
+          "query": "SELECT difference(*) FROM \"container-memory-usage-failures\" WHERE (\"service\"::tag =~ /^$service$/ AND \"testEnvironment\"::tag =~ /^$testEnvironment$/ AND \"systemUnderTest\"::tag =~ /^$systemUnderTest$/) AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -5025,15 +5054,15 @@
             },
             {
               "condition": "AND",
-              "key": "systemUnderTest::tag",
-              "operator": "=~",
-              "value": "/^$systemUnderTest$/"
-            },
-            {
-              "condition": "AND",
               "key": "testEnvironment::tag",
               "operator": "=~",
               "value": "/^$testEnvironment$/"
+            },
+            {
+              "condition": "AND",
+              "key": "systemUnderTest::tag",
+              "operator": "=~",
+              "value": "/^$systemUnderTest$/"
             }
           ]
         }
@@ -5042,10 +5071,13 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "",
-  "schemaVersion": 38,
-  "style": "dark",
-  "tags": [],
+  "refresh": false,
+  "schemaVersion": 39,
+  "tags": [
+    "jfr",
+    "perfana",
+    "perfana-template"
+  ],
   "templating": {
     "list": [
       {
@@ -5108,13 +5140,13 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Perfana JFR Metrics 0.5",
   "uid": "perfana-jfr-metrics-0-5",
-  "version": 2,
+  "version": 21,
   "weekStart": ""
 }
