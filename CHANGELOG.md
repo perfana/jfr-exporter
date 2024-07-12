@@ -1,5 +1,11 @@
 # Change log jfr-exporter
 
+### v0.5.0: July 2024
+* Deprecated the application argument, use service tag instead
+* Specify multiple tags using tag=name/value, e.g. tag=service/afterburner-fe
+* Dashboard improvements, uses tags: service,systemUnderTest,testEnvironment
+* Improved default tags code efficiency
+
 ### v0.4.1: May 2024
 * socket events: lowered dynamic ports to 16_000 
 
@@ -20,15 +26,3 @@
 * Make event handling more robust by catching exceptions
 * Added disableStackTraces option to limit the amount of stacktrace data
 
-### v0.4.0: May 2024
-* Fix for ephemeral/dynamic ports for network recognition
-* Added thread context switch rate and dashboard panel
-* Added native memory events and dashboard panels
-* Added container CPU and Memory and dashboard panels
-* Dashboard improvements
-
-### v0.5.0: July 2024
-* Deprecated the application argument, use service tag instead
-* Specify multiple tags using tag=name/value, e.g. tag=service/afterburner-fe
-* Dashboard improvements, uses tags: service,systemUnderTest,testEnvironment
-* Improved default tags code efficiency
