@@ -17,12 +17,13 @@ package io.perfana.jfr.event;
 
 import io.perfana.jfr.*;
 import jdk.jfr.consumer.RecordedEvent;
-import jdk.jfr.consumer.RecordedThread;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+
+import static io.perfana.jfr.JfrUtil.*;
 
 public class MonitorEvent implements OnJfrEvent, JfrEventProvider {
 
@@ -59,7 +60,7 @@ public class MonitorEvent implements OnJfrEvent, JfrEventProvider {
                 return;
             }
 
-            List<String> stackTrace = JfrUtil.translateStacktrace(event);
+            List<String> stackTrace = translateStacktrace(event);
 
             String firstStack = stackTrace.isEmpty() ? "<none>" : stackTrace.get(0);
             log.debug("Found monitor wait of %d nanoseconds of '%s' in '%s'", durationNs, monitorClass, firstStack);
@@ -105,11 +106,6 @@ public class MonitorEvent implements OnJfrEvent, JfrEventProvider {
                 log.error("Unknown monitor event '%s'", name);
             }
         }
-    }
-
-    private static String nullSafeGetThreadJavaName(RecordedEvent event, String attributeName) {
-        RecordedThread thread = event.getThread(attributeName);
-        return thread == null ? "<null>" : thread.getJavaName();
     }
 
     private void reportMonitor(String measurementName, long duration, Instant startTime, Map<String, Object> extraFields, List<String> stackTrace) {

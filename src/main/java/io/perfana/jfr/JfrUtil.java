@@ -16,6 +16,7 @@
 package io.perfana.jfr;
 
 import jdk.jfr.consumer.RecordedEvent;
+import jdk.jfr.consumer.RecordedThread;
 import org.jetbrains.annotations.NotNull;
 
 import javax.management.*;
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class JfrUtil {
+
+    public static final String THREAD_NULL_NAME = "<null>";
 
     private JfrUtil() {
     }
@@ -72,6 +75,16 @@ public class JfrUtil {
         return  event.getStackTrace().getFrames().stream()
                 .map(f -> f.getMethod().getType().getName() + "." + f.getMethod().getName() + " (line: " + f.getLineNumber() + ")")
                 .toList();
+    }
+
+    public static String nullSafeGetThreadJavaName(RecordedEvent event) {
+        RecordedThread thread = event.getThread();
+        return thread == null ? THREAD_NULL_NAME : thread.getJavaName();
+    }
+
+    public static String nullSafeGetThreadJavaName(RecordedEvent event, String attributeName) {
+        RecordedThread thread = event.getThread(attributeName);
+        return thread == null ? THREAD_NULL_NAME : thread.getJavaName();
     }
 
     void startFlightRecorderViaMBean() {

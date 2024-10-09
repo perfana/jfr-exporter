@@ -59,7 +59,7 @@ public class JfrEventHandler {
 
             EventSettings settings = stream.enable(jfrEventSettings.getName());
 
-            StringBuilder debugInfo = new StringBuilder();
+            StringBuilder debugInfo = new StringBuilder(512);
             if (jfrEventSettings.hasPeriod()) {
                 settings.withPeriod(jfrEventSettings.getPeriod());
                 debugInfo.append(" with period ").append(jfrEventSettings.getPeriod());

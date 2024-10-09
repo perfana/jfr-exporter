@@ -78,7 +78,7 @@ public class SocketEvent implements OnJfrEvent, JfrEventProvider {
         Instant startTime = event.getStartTime();
 
         String name = event.getEventType().getName();
-        String threadName = event.getThread().getJavaName();
+        String threadName = JfrUtil.nullSafeGetThreadJavaName(event);
         long durationNs = event.getLong("duration");
         long bytesRead = event.getLong("bytesRead");
         String host = event.getString("host");
@@ -109,7 +109,7 @@ public class SocketEvent implements OnJfrEvent, JfrEventProvider {
         Instant startTime = event.getStartTime();
 
         String name = event.getEventType().getName();
-        String threadName = event.getThread().getJavaName();
+        String threadName = JfrUtil.nullSafeGetThreadJavaName(event);
         long durationNs = event.getLong("duration");
         long bytesWritten = event.getLong("bytesWritten");
         String host = event.getString("host");

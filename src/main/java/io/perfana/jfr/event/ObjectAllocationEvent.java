@@ -22,6 +22,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
+import static io.perfana.jfr.JfrUtil.*;
+
 public class ObjectAllocationEvent implements OnJfrEvent, JfrEventProvider {
 
     private static final Logger log = Logger.getLogger(ObjectAllocationEvent.class);
@@ -57,15 +59,15 @@ public class ObjectAllocationEvent implements OnJfrEvent, JfrEventProvider {
                 return;
             }
 
-            List<String> stackTrace = JfrUtil.translateStacktrace(event);
+            List<String> stackTrace = translateStacktrace(event);
 
-            String objectClassTranslation = JfrUtil.translatePrimitiveClass(objectClass);
+            String objectClassTranslation = translatePrimitiveClass(objectClass);
             String firstStack = stackTrace.isEmpty() ? "<none>" : stackTrace.get(0);
             log.debug("Found big object allocation of %d bytes of %s in '%s'", allocationSize, objectClassTranslation, firstStack);
 
             Map<String, Object> extraFields = Map.of(
                     "objectClass", objectClassTranslation,
-                    "thread", event.getThread().getJavaName()
+                    "thread", JfrUtil.nullSafeGetThreadJavaName(event)
             );
 
             ProcessedJfrEvent processedEvent = ProcessedJfrEvent.of(
