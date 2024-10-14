@@ -1,47 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_INFLUXDB_JFR",
-      "label": "InfluxDB JFR",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "influxdb",
-      "pluginName": "InfluxDB"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "10.1.5"
-    },
-    {
-      "type": "datasource",
-      "id": "influxdb",
-      "name": "InfluxDB",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -2020,7 +1977,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT \"stacktrace\",\"objectClass\" FROM \"default\".\"big-allocations\" WHERE $timeFilter",
-          "rawQuery": false,
+          "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
@@ -2762,8 +2719,8 @@
           "measurement": "java-monitor-enter",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"stacktrace\",\"objectClass\" FROM \"default\".\"big-allocations\" WHERE $timeFilter",
-          "rawQuery": false,
+          "query": "SELECT \"stacktrace\",\"monitor-class\",\"thread\",\"previous-owner\",\"address\" FROM \"default\".\"java-monitor-enter\" WHERE $timeFilter",
+          "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
@@ -3145,8 +3102,8 @@
           "measurement": "java-monitor-wait",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"stacktrace\",\"objectClass\" FROM \"default\".\"big-allocations\" WHERE $timeFilter",
-          "rawQuery": false,
+          "query": "SELECT \"stacktrace\",\"monitor-class\",\"thread\",\"notifier\",\"timeout\",\"timed-out\" FROM \"default\".\"java-monitor-wait\" WHERE $timeFilter",
+          "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
